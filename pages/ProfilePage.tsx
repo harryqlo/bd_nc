@@ -6,10 +6,8 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
 import { MainContainer } from '../components/layout/MainContainer';
-codex/revisar-y-reemplazar-console.log
 import { logInfo } from '../utils/logger';
 import { logger } from '../utils/logger';
-main
 
 const ProfilePage: React.FC = () => {
   const { user, login } = useAuth(); 
@@ -34,11 +32,9 @@ const ProfilePage: React.FC = () => {
 
     // In real app, call API to change password.
     // For this demo, we don't actually store/check currentPassword.
-codex/revisar-y-reemplazar-console.log
     logInfo(`Password change attempt for ${user.username}. Current: ${currentPassword}, New: ${newPassword}`);
 
     logger.log(`Password change attempt for ${user.username}. Current: ${currentPassword}, New: ${newPassword}`);
-main
     
     setMessage({ type: 'success', text: 'Contraseña cambiada exitosamente.' });
     setCurrentPassword('');

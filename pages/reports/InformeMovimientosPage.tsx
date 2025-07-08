@@ -140,11 +140,9 @@ const InformeMovimientosPage: React.FC = () => {
 
   const handleExport = (format: 'csv' | 'pdf' | 'excel') => {
     setAlertMessage({type: 'info', message: `Exportando datos a ${format.toUpperCase()}...`});
-codex/revisar-y-reemplazar-console.log
     logInfo(`Exporting Movements to ${format.toUpperCase()}:`, filteredData);
 
     logger.log(`Exporting Movements to ${format.toUpperCase()}:`, filteredData);
-main
   };
 
   return (

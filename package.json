@@ -7,11 +7,9 @@
     "dev": "vite",
     "build": "vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/global.css -o ./dist/output.css --minify",
-codex/instalar-jest-o-vitest-y-configurar-pruebas
-    "test": "vitest"
+    "test": "vitest",
 
     "server": "node server/index.js"
-main
   },
   "dependencies": {
     "react": "^19.1.0",
