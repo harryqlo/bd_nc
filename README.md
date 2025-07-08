@@ -3,9 +3,15 @@
 
 ## Descripción General
 
+ codex/actualizar-readme-y-componentes-de-texto
 **North Chrome LTDA - Gestión de Bodega** es una aplicación web completa para la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
 
 El sistema cuenta con un frontend en React y un backend REST desarrollado con Node.js que persiste la información en una base de datos MongoDB. Toda la lógica de negocio y la autenticación se ejecutan en el servidor, mientras que la interfaz se comunica mediante API.
+
+**North Chrome LTDA - Gestión de Bodega** es una aplicación web que simula la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
+
+La capa principal sigue siendo el frontend, utilizando datos mock (simulados) para todas sus operaciones. Opcionalmente se incluye un pequeño backend escrito en **Node.js** con **Express** y **MongoDB**, el cual proporciona rutas REST básicas y autenticación mediante JWT. Este backend sirve como ejemplo para conectar la aplicación a una base de datos real.
+ main
 
 ## Características Principales
 
@@ -132,14 +138,34 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 *   **Node.js / Express**: Backend REST que centraliza la lógica de negocio.
 *   **MongoDB**: Base de datos utilizada para almacenar de forma persistente los datos del sistema.
 
+## Pila Tecnológica (Backend)
+
+* **Node.js** y **Express** para el servidor HTTP.
+* **MongoDB** como base de datos con **Mongoose** para la capa ODM.
+* **JSON Web Tokens (JWT)** para la autenticación de usuarios.
+
+### Inicio Rápido del Backend
+
+1. Ve a la carpeta `server/` y ejecuta `npm install`.
+2. Copia `.env.example` a `.env` y ajusta `MONGO_URI` y `JWT_SECRET`.
+3. Inicia el backend con `npm start` (puerto por defecto `4000`).
+4. Las rutas REST estarán disponibles bajo `/api`.
+
 ## Configuración y Puesta en Marcha
 
+codex/actualizar-readme-y-componentes-de-texto
 1.  **Instalación de Dependencias**:
     *   Ejecuta `npm install` en la raíz del proyecto para instalar las dependencias del frontend.
     *   En el directorio del backend ejecuta `npm install` para preparar el servidor.
 2.  **Desarrollo Local**:
     *   Inicia el backend con `npm start` en su carpeta correspondiente.
     *   En otra terminal ejecuta `npm run dev` para levantar el frontend con Vite.
+
+1.  **Instalación de Dependencias**: Ejecuta `npm install` en la raíz del proyecto.
+2.  **Desarrollo Local**:
+    *   Ejecuta `npm run server` para iniciar el backend de autenticación en `http://localhost:3001`.
+    *   En otra terminal, usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
+main
 3.  **Compilación para Producción**: Ejecuta `npm run build` para generar la carpeta `dist` con todos los archivos estáticos listos para desplegar. Este comando también compila los estilos de Tailwind a `dist/output.css`.
 4.  **Acceso**:
     *   Una vez abierta la aplicación en el navegador, serás dirigido a la página de Login.
@@ -175,13 +201,22 @@ El código fuente está organizado en los siguientes directorios principales:
 *   `index.html`: El archivo HTML principal que carga la aplicación.
 *   `metadata.json`: Metadatos para la plataforma que hospeda la aplicación (si aplica).
 *   `README.md`: Este archivo.
+*   `server/`: Backend opcional con Express y MongoDB.
 
 ## Notas Importantes
 
+ codex/actualizar-readme-y-componentes-de-texto
 *   **Arquitectura Cliente-Servidor**: La aplicación se apoya en un backend Node.js que expone una API REST para todas las operaciones de inventario.
 *   **Seguridad**: Las contraseñas se almacenan con hashing seguro y la autenticación utiliza tokens JWT con roles de usuario.
 *   **Exportación de Datos**: Los informes pueden exportarse a PDF, CSV o Excel desde la interfaz.
 *   **Escalabilidad**: El sistema persiste la información en MongoDB y puede ejecutarse en entornos de producción.
+*   **Frontend Primero**: La aplicación está pensada como una demo de interfaz. El backend incluido es opcional y de alcance limitado.
+*   **Seguridad Simplificada**: La autenticación y la gestión de contraseñas están altamente simplificadas y no son seguras para un entorno de producción.
+*   **Funcionalidades Parcialmente Implementadas**: La exportación a PDF sigue limitada a una impresión básica desde el navegador.
+*   **Rendimiento con Datos Mock**: Aunque se ha intentado que la UI sea fluida, el rendimiento con cantidades masivas de datos en los arrays mock puede verse afectado, ya que todas las operaciones de filtrado y ordenamiento se realizan en el cliente.
+*   **IDs Dinámicos**: Los nuevos elementos creados durante la sesión reciben IDs generados dinámicamente (ej. `prod_dyn_X`, `doc_dyn_X`). Estos no son persistentes entre sesiones completas de la aplicación.
+*   **Consistencia Global de Mocks**: Se ha hecho un esfuerzo para que los cambios en los arrays `MOCK_*` se reflejen globalmente en la sesión. Sin embargo, en una aplicación real, esto sería manejado por un estado global más robusto (como Redux/Zustand) o por la sincronización con un backend.
+main
 
 ## Posibles Mejoras Futuras
 
