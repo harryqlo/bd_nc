@@ -79,13 +79,12 @@ La aplicación se organiza en varios módulos, cada uno con funcionalidades espe
     *   Configuraciones de seguridad: Tiempo de sesión, longitud mínima de contraseña (simulado).
     *   Integraciones: URL de API externa (simulado).
     *   Apariencia: Selección de tema (Claro/Oscuro).
-    *   Utilidades del sistema (simuladas): Backup de BD, exportación de datos, limpieza de caché, diagnóstico.
+    *   Utilidades del sistema: Backup de BD (descarga JSON), exportación de datos (CSV), limpieza de caché y diagnóstico básico.
 
 11. **Carga Masiva (Admin/Gestor)**:
     *   Funcionalidad para cargar datos desde archivos.
-    *   Implementado para **Maestro de Productos** mediante archivo XLSX.
-    *   Incluye descarga de plantilla XLSX.
-    *   Otras entidades (Inventario Inicial, Proveedores, Categorías) están como opciones pero marcadas como "No implementado".
+    *   Implementado para **Maestro de Productos**, **Proveedores**, **Categorías** e **Inventario Inicial**, todos mediante archivo XLSX.
+    *   Incluye descarga de plantillas XLSX para cada entidad.
 
 12. **Perfil de Usuario**:
     *   Visualización de la información del usuario actual.
@@ -176,7 +175,7 @@ El código fuente está organizado en los siguientes directorios principales:
 
 *   **Frontend Puro**: Esta es una demostración de interfaz de usuario y lógica de frontend. No hay un backend real ni base de datos. Todas las "llamadas API" son simuladas.
 *   **Seguridad Simplificada**: La autenticación y la gestión de contraseñas están altamente simplificadas y no son seguras para un entorno de producción.
-*   **Funcionalidades No Implementadas**: Algunas características, como la exportación completa a PDF/Excel de informes o ciertos tipos de carga masiva, están marcadas como "No implementado" o son simuladas con mensajes en consola.
+*   **Funcionalidades Parcialmente Implementadas**: La exportación a PDF sigue limitada a una impresión básica desde el navegador.
 *   **Rendimiento con Datos Mock**: Aunque se ha intentado que la UI sea fluida, el rendimiento con cantidades masivas de datos en los arrays mock puede verse afectado, ya que todas las operaciones de filtrado y ordenamiento se realizan en el cliente.
 *   **IDs Dinámicos**: Los nuevos elementos creados durante la sesión reciben IDs generados dinámicamente (ej. `prod_dyn_X`, `doc_dyn_X`). Estos no son persistentes entre sesiones completas de la aplicación.
 *   **Consistencia Global de Mocks**: Se ha hecho un esfuerzo para que los cambios en los arrays `MOCK_*` se reflejen globalmente en la sesión. Sin embargo, en una aplicación real, esto sería manejado por un estado global más robusto (como Redux/Zustand) o por la sincronización con un backend.

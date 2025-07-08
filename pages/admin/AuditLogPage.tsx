@@ -8,7 +8,8 @@ import { Button } from '../../components/ui/Button';
 import { XCircleIcon } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import { MOCK_AUDIT_LOGS } from '../../constants'; 
+import { MOCK_AUDIT_LOGS } from '../../constants';
+import { downloadCSV } from '../../utils/exportUtils';
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'medium' });
@@ -40,6 +41,11 @@ const AuditLogPage: React.FC = () => {
   const handleResetFilters = () => {
     setSearchTerm('');
     setSpecificFilters(initialSpecificFilters);
+  };
+
+  const handleDownloadLog = () => {
+    if (logs.length === 0) return;
+    downloadCSV(logs, 'sistema_log.csv');
   };
 
   const filteredLogs = useMemo(() => {
@@ -106,7 +112,7 @@ ERROR: 2024-07-25 11:05:00 - EmailService: Failed to send notification for low s
 INFO: 2024-07-25 11:15:00 - Admin: User 'operador_nuevo' created.
 WARN: 2024-07-25 11:20:00 - BulkUpload: File 'categorias_viejas.csv' contained 3 deprecated category IDs.`}
         </pre>
-         <Button variant="outline" className="mt-4">Descargar sistema.log (Simulado)</Button>
+         <Button variant="outline" className="mt-4" onClick={handleDownloadLog}>Descargar sistema.log</Button>
       </Card>
     </div>
   );

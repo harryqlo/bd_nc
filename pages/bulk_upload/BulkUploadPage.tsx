@@ -5,7 +5,7 @@ import { Button } from '../../components/ui/Button';
 import { Select } from '../../components/ui/Select';
 import { Alert } from '../../components/ui/Alert';
 import { ArrowUpTrayIcon, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES } from '../../constants';
-import { Product } from '../../types';
+import { Product, Category, Provider } from '../../types';
 
 const BulkUploadPage: React.FC = () => {
   const [selectedEntityType, setSelectedEntityType] = useState<string>('productos');
@@ -15,18 +15,18 @@ const BulkUploadPage: React.FC = () => {
 
   const entityOptions = [
     { value: 'productos', label: 'Maestro de Productos (XLSX)' },
-    { value: 'inventario-inicial', label: 'Inventario Inicial (No implementado)' },
-    { value: 'proveedores', label: 'Maestro de Proveedores (No implementado)' },
-    { value: 'categorias', label: 'Maestro de Categorías (No implementado)' },
+    { value: 'inventario-inicial', label: 'Inventario Inicial (XLSX)' },
+    { value: 'proveedores', label: 'Maestro de Proveedores (XLSX)' },
+    { value: 'categorias', label: 'Maestro de Categorías (XLSX)' },
   ];
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const selectedFile = event.target.files[0];
-      if (selectedEntityType === 'productos' && !selectedFile.name.endsWith('.xlsx')) {
-        setUploadStatus({ type: 'error', message: 'Para Productos, por favor seleccione un archivo .xlsx' });
+      if (!selectedFile.name.endsWith('.xlsx')) {
+        setUploadStatus({ type: 'error', message: 'Por favor seleccione un archivo .xlsx' });
         setFile(null);
-        if (event.target) event.target.value = ''; // Clear the input
+        if (event.target) event.target.value = '';
         return;
       }
       setFile(selectedFile);
@@ -37,8 +37,8 @@ const BulkUploadPage: React.FC = () => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles[0]) {
         const droppedFile = acceptedFiles[0];
-        if (selectedEntityType === 'productos' && !droppedFile.name.endsWith('.xlsx')) {
-            setUploadStatus({ type: 'error', message: 'Para Productos, por favor arrastre un archivo .xlsx' });
+        if (!droppedFile.name.endsWith('.xlsx')) {
+            setUploadStatus({ type: 'error', message: 'Por favor arrastre un archivo .xlsx' });
             setFile(null);
             return;
         }
@@ -115,18 +115,85 @@ const BulkUploadPage: React.FC = () => {
     return { products, errors, summary };
   };
 
+  const parseCategoryXLSX = (data: any[]): { categories: Category[], errors: string[], summary: string } => {
+    const categories: Category[] = [];
+    const errors: string[] = [];
+    let added = 0;
+    data.forEach((row, index) => {
+      const name = row['nombre'] || row['Nombre'];
+      const id = row['id'] || row['ID'];
+      if (!id || !name) {
+        errors.push(`Fila ${index + 2}: ID y Nombre son obligatorios.`);
+        return;
+      }
+      const category: Category = { id: String(id), nombre: String(name), descripcion: String(row['descripcion'] || '') };
+      const existingIndex = MOCK_CATEGORIES.findIndex(c => c.id === category.id);
+      if (existingIndex !== -1) MOCK_CATEGORIES[existingIndex] = category; else {
+        MOCK_CATEGORIES.push(category); added++; }
+      categories.push(category);
+    });
+    const summary = `${categories.length} categorías procesadas. ${added} añadidas. ${errors.length} errores.`;
+    return { categories, errors, summary };
+  };
+
+  const parseProviderXLSX = (data: any[]): { providers: Provider[], errors: string[], summary: string } => {
+    const providers: Provider[] = [];
+    const errors: string[] = [];
+    let added = 0;
+    data.forEach((row, index) => {
+      const id = row['id'] || row['ID'] || row['proveedor_id'];
+      const nombre = row['nombre'] || row['Nombre'];
+      if (!id || !nombre) {
+        errors.push(`Fila ${index + 2}: ID y Nombre son obligatorios.`);
+        return;
+      }
+      const provider: Provider = {
+        id: String(id),
+        nombre: String(nombre),
+        contacto: String(row['contacto'] || ''),
+        direccion: String(row['direccion'] || ''),
+        telefono: String(row['telefono'] || ''),
+        email: String(row['email'] || ''),
+        rut: String(row['rut'] || ''),
+      };
+      const idx = MOCK_PROVIDERS.findIndex(p => p.id === provider.id);
+      if (idx !== -1) MOCK_PROVIDERS[idx] = provider; else { MOCK_PROVIDERS.push(provider); added++; }
+      providers.push(provider);
+    });
+    const summary = `${providers.length} proveedores procesados. ${added} añadidos. ${errors.length} errores.`;
+    return { providers, errors, summary };
+  };
+
+  const parseInventoryXLSX = (data: any[]): { processed: number, errors: string[], summary: string } => {
+    let processed = 0;
+    const errors: string[] = [];
+    data.forEach((row, index) => {
+      const sku = row['sku'] || row['SKU'];
+      const cantidad = parseInt(row['cantidad'] || row['Cantidad'] || '0', 10);
+      if (!sku) {
+        errors.push(`Fila ${index + 2}: SKU es obligatorio.`);
+        return;
+      }
+      const productIndex = MOCK_PRODUCTS_FOR_CONSUMPTION.findIndex(p => p.sku === String(sku));
+      if (productIndex === -1) {
+        errors.push(`Fila ${index + 2}: SKU ${sku} no existe en productos.`);
+        return;
+      }
+      MOCK_PRODUCTS_FOR_CONSUMPTION[productIndex].stock_actual = cantidad;
+      processed++;
+    });
+    const summary = `${processed} items de inventario actualizados. ${errors.length} errores.`;
+    return { processed, errors, summary };
+  };
+
 
   const handleUpload = async () => {
     if (!file) {
       setUploadStatus({ type: 'error', message: 'Por favor, seleccione un archivo para cargar.' });
       return;
     }
-    if (selectedEntityType !== 'productos') {
-      setUploadStatus({ type: 'info', message: `Carga masiva para ${selectedEntityType} no implementada en esta demo.` });
-      return;
-    }
-    if (selectedEntityType === 'productos' && !file.name.endsWith('.xlsx')) {
-      setUploadStatus({ type: 'error', message: 'Para Productos, por favor seleccione un archivo .xlsx.' });
+    if (!file.name.endsWith('.xlsx')) {
+      setUploadStatus({ type: 'error', message: 'Por favor seleccione un archivo .xlsx.' });
       return;
     }
 
@@ -141,9 +208,23 @@ const BulkUploadPage: React.FC = () => {
             const workbook = XLSX.read(data, { type: 'binary' });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet); // Converts sheet to array of objects
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-            const { products, errors, summary } = parseProductXLSX(jsonData);
+            let summary = '';
+            let errors: string[] = [];
+            if (selectedEntityType === 'productos') {
+              const res = parseProductXLSX(jsonData);
+              summary = res.summary; errors = res.errors;
+            } else if (selectedEntityType === 'categorias') {
+              const res = parseCategoryXLSX(jsonData);
+              summary = res.summary; errors = res.errors;
+            } else if (selectedEntityType === 'proveedores') {
+              const res = parseProviderXLSX(jsonData);
+              summary = res.summary; errors = res.errors;
+            } else if (selectedEntityType === 'inventario-inicial') {
+              const res = parseInventoryXLSX(jsonData);
+              summary = res.summary; errors = res.errors;
+            }
             if (errors.length > 0) {
                 setUploadStatus({ type: 'warning', message: `Procesamiento completado con errores. ${summary} Errores: ${errors.slice(0,3).join('; ')}${errors.length > 3 ? '...' : ''}` });
             } else {
@@ -153,7 +234,7 @@ const BulkUploadPage: React.FC = () => {
             setUploadStatus({ type: 'error', message: `Error al procesar el archivo XLSX: ${(err as Error).message}` });
         }
         setIsLoading(false);
-        setFile(null); 
+        setFile(null);
         const fileInput = document.getElementById('file-upload') as HTMLInputElement;
         if (fileInput) fileInput.value = ''; // Reset file input
     };
@@ -183,8 +264,30 @@ const BulkUploadPage: React.FC = () => {
         XLSX.writeFile(workbook, "plantilla_productos.xlsx");
         setUploadStatus({ type: 'success', message: 'Plantilla XLSX para productos descargada.' });
 
-    } else {
-        setUploadStatus({ type: 'info', message: `Descarga de plantilla para ${selectedEntityType} no implementada.` });
+    } else if (selectedEntityType === 'categorias') {
+        const headers = ["id","nombre","descripcion"];
+        const exampleData = [ { id: "cat1", nombre: "Categoría 1", descripcion: "Descripción" } ];
+        const ws = XLSX.utils.json_to_sheet(exampleData, { header: headers });
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Categorías");
+        XLSX.writeFile(wb, "plantilla_categorias.xlsx");
+        setUploadStatus({ type: 'success', message: 'Plantilla para categorías descargada.' });
+    } else if (selectedEntityType === 'proveedores') {
+        const headers = ["id","nombre","contacto","direccion","telefono","email","rut"];
+        const exampleData = [ { id: "prov1", nombre: "Proveedor 1", contacto: "Juan", direccion: "Calle 1", telefono: "123", email: "prov1@example.com", rut: "1111-1" } ];
+        const ws = XLSX.utils.json_to_sheet(exampleData, { header: headers });
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Proveedores");
+        XLSX.writeFile(wb, "plantilla_proveedores.xlsx");
+        setUploadStatus({ type: 'success', message: 'Plantilla para proveedores descargada.' });
+    } else if (selectedEntityType === 'inventario-inicial') {
+        const headers = ["sku","cantidad"];
+        const exampleData = [ { sku: "SKU100", cantidad: 100 } ];
+        const ws = XLSX.utils.json_to_sheet(exampleData, { header: headers });
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Inventario");
+        XLSX.writeFile(wb, "plantilla_inventario.xlsx");
+        setUploadStatus({ type: 'success', message: 'Plantilla de inventario descargada.' });
     }
   }
 
@@ -229,15 +332,13 @@ const BulkUploadPage: React.FC = () => {
                     type="file" 
                     className="sr-only" 
                     onChange={handleFileChange} 
-                    accept={selectedEntityType === 'productos' ? ".xlsx" : "*/*"} // Accept only .xlsx for products
+                    accept=".xlsx"
                     disabled={isLoading} 
                   />
                 </label>
                 <p className="pl-1">o arrastrar y soltar</p>
               </div>
-              <p className="text-xs text-gray-500 dark:text-slate-500">
-                {selectedEntityType === 'productos' ? 'Archivos .xlsx para Productos.' : 'Formatos no implementados para esta entidad.'}
-              </p>
+              <p className="text-xs text-gray-500 dark:text-slate-500">Archivos .xlsx</p>
             </div>
           </div>
 
@@ -246,10 +347,10 @@ const BulkUploadPage: React.FC = () => {
           )}
           
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 pt-2">
-            <Button onClick={handleDownloadTemplate} variant="outline" disabled={isLoading || selectedEntityType !== 'productos'}>
+            <Button onClick={handleDownloadTemplate} variant="outline" disabled={isLoading}>
               Descargar Plantilla (XLSX)
             </Button>
-            <Button onClick={handleUpload} disabled={!file || isLoading || (selectedEntityType === 'productos' && !file.name.endsWith('.xlsx'))} isLoading={isLoading}>
+            <Button onClick={handleUpload} disabled={!file || isLoading || !file.name.endsWith('.xlsx')} isLoading={isLoading}>
               {isLoading ? 'Procesando...' : 'Iniciar Carga'}
             </Button>
           </div>
@@ -259,7 +360,7 @@ const BulkUploadPage: React.FC = () => {
       <Card title="Estado de Cargas Recientes">
         <ul className="divide-y divide-gray-200 dark:divide-slate-700">
             <li className="py-3">
-                <p className="text-sm text-gray-500 dark:text-slate-400">No hay cargas recientes (historial no implementado).</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400">No hay registros de cargas previas.</p>
             </li>
         </ul>
       </Card>
