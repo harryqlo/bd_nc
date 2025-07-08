@@ -9,6 +9,7 @@ import { UserRole } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_PROVIDERS, MOCK_SOLICITANTES } from '../../constants';
+import { downloadCSV, downloadExcel, downloadPDF } from '../../utils/exportUtils';
 import { Table } from '../../components/ui/Table';
 import { TableColumn } from '../../types';
 
@@ -153,8 +154,10 @@ const InformePersonalizadoPage: React.FC = () => {
       setAlertMessage({ type: 'error', message: 'Genere el informe antes de exportar.'});
       return;
     }
-    setAlertMessage({ type: 'info', message: `Exportando informe a ${format.toUpperCase()}... (Simulado)` });
-    console.log("Exporting Report Data:", { dataSource, selectedFields, filters, sortField, sortOrder, data: reportData });
+    if (format === 'csv') downloadCSV(reportData, 'informe_personalizado.csv');
+    if (format === 'excel') downloadExcel(reportData, 'informe_personalizado.xlsx');
+    if (format === 'pdf') downloadPDF(reportData, 'Informe Personalizado');
+    setAlertMessage({ type: 'success', message: `Informe exportado en formato ${format.toUpperCase()}.` });
   };
 
 

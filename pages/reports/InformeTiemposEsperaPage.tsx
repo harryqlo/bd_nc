@@ -9,7 +9,8 @@ import { Alert } from '../../components/ui/Alert';
 import { TableColumn, UserRole, Provider, DocumentHeader, WorkOrder } from '../../types'; // Added DocumentHeader, WorkOrder
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import { MOCK_PROVIDERS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, XCircleIcon } from '../../constants'; // Added MOCK_DOCUMENTS, MOCK_WORK_ORDERS
+import { MOCK_PROVIDERS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, XCircleIcon } from '../../constants';
+import { downloadCSV, downloadExcel, downloadPDF } from '../../utils/exportUtils';
 
 
 interface MockLeadTimeData {
@@ -139,8 +140,14 @@ const InformeTiemposEsperaPage: React.FC = () => {
   const providerOptions = [{value: '', label: 'Todos los Proveedores'}, ...MOCK_PROVIDERS.map(p => ({value: p.id, label:p.nombre}))];
 
   const handleExport = (format: 'csv' | 'pdf' | 'excel') => {
-    setAlertMessage({ type: 'info', message: `Exportando datos a ${format.toUpperCase()}... (Simulado)` });
-    console.log(`Exporting Lead Time Data to ${format.toUpperCase()}:`, filteredData);
+    if (filteredData.length === 0) {
+      setAlertMessage({ type: 'warning', message: 'No hay datos para exportar.' });
+      return;
+    }
+    if (format === 'csv') downloadCSV(filteredData, 'informe_tiempos.csv');
+    if (format === 'excel') downloadExcel(filteredData, 'informe_tiempos.xlsx');
+    if (format === 'pdf') downloadPDF(filteredData, 'Informe de Tiempos');
+    setAlertMessage({ type: 'success', message: `Datos exportados a ${format.toUpperCase()}.` });
   };
 
   return (

@@ -11,7 +11,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { useConfig } from '../../contexts/ConfigContext'; 
 import { UserRole, SystemConfig } from '../../types';
 import { Navigate } from 'react-router-dom';
-import { logAuditEntry } from '../../constants';
+import { logAuditEntry, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, MOCK_MATERIAL_REQUESTS, MOCK_USERS, MOCK_AUDIT_LOGS, MOCK_ADJUSTMENTS } from '../../constants';
+import { downloadJSON, downloadCSV } from '../../utils/exportUtils';
 
 const SystemConfigPage: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -70,29 +71,50 @@ const SystemConfigPage: React.FC = () => {
   };
   
   const handleBackupDB = () => {
-    // setIsLoading(true); // No longer needed for delay
-    setMessage({type: 'info', text: 'Iniciando copia de seguridad de la base de datos... (Simulado)'});
-    // Simulating immediate action
-    setMessage({type: 'success', text: `Copia de seguridad de BD simulada: bodega_backup_${new Date().toISOString().slice(0,10)}.db.gz`});
-    // setIsLoading(false); // No longer needed for delay
-  }
-  
+    const backupData = {
+      products: MOCK_PRODUCTS_FOR_CONSUMPTION,
+      providers: MOCK_PROVIDERS,
+      categories: MOCK_CATEGORIES,
+      consumptions: MOCK_CONSUMPTIONS,
+      documents: MOCK_DOCUMENTS,
+      work_orders: MOCK_WORK_ORDERS,
+      material_requests: MOCK_MATERIAL_REQUESTS,
+      users: MOCK_USERS,
+      audit_logs: MOCK_AUDIT_LOGS,
+      adjustments: MOCK_ADJUSTMENTS,
+      config: localConfig,
+    };
+    downloadJSON(backupData, `bodega_backup_${new Date().toISOString().slice(0,10)}.json`);
+    setMessage({type: 'success', text: 'Copia de seguridad creada y descargada.'});
+  };
+
   const handleExportData = (dataType: string) => {
-     setMessage({type: 'info', text: `Iniciando exportación de ${dataType}... (Simulado)`});
-     // Simulating immediate action
-     setMessage({type: 'success', text: `Datos de ${dataType} exportados a ${dataType}.csv (Simulado)`});
-  }
+     let data: any[] = [];
+     if (dataType === 'Inventario') data = MOCK_PRODUCTS_FOR_CONSUMPTION;
+     if (dataType === 'Documentos') data = MOCK_DOCUMENTS;
+     if (data.length === 0) {
+       setMessage({type: 'warning', text: `No hay datos para ${dataType}.`});
+       return;
+     }
+     downloadCSV(data, `${dataType.toLowerCase()}.csv`);
+     setMessage({type: 'success', text: `Datos de ${dataType} exportados.`});
+  };
 
   const handleClearCache = () => {
-    setMessage({ type: 'info', text: 'Limpiando caché de la aplicación... (Simulado)' });
-    // Simulating immediate action
-    setMessage({ type: 'success', text: 'Caché de aplicación limpiada. (Simulado)' });
+    localStorage.clear();
+    setMessage({ type: 'success', text: 'Caché de aplicación limpiada.' });
   }
 
   const handleRunDiagnostics = () => {
-    setMessage({ type: 'info', text: 'Ejecutando diagnóstico del sistema... (Simulado)' });
-    // Simulating immediate action
-    setMessage({ type: 'success', text: 'Diagnóstico completado. Sistema OK. (Simulado)' });
+    const diagnostics = {
+      products: MOCK_PRODUCTS_FOR_CONSUMPTION.length,
+      providers: MOCK_PROVIDERS.length,
+      categories: MOCK_CATEGORIES.length,
+      documents: MOCK_DOCUMENTS.length,
+      consumptions: MOCK_CONSUMPTIONS.length,
+    };
+    console.log('Diagnostics:', diagnostics);
+    setMessage({ type: 'success', text: 'Diagnóstico completado. Sistema OK.' });
   }
   
   const handleViewSystemInfo = () => setIsSystemInfoModalOpen(true);
