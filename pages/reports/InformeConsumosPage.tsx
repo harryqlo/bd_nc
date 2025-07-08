@@ -12,6 +12,7 @@ import { logInfo } from '../../utils/logger';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MainContainer } from '../../components/layout/MainContainer';
+import { logger } from '../../utils/logger';
 
 const formatCurrency = (value: number) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value);
 const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString('es-CL');
@@ -119,7 +120,11 @@ const InformeConsumosPage: React.FC = () => {
   const handleExport = (format: 'csv' | 'pdf' | 'excel') => {
     setAlertMessage({type: 'info', message: `Exportando datos a ${format.toUpperCase()}...`});
     // In a real app, this would trigger a file download with the filteredData
+codex/revisar-y-reemplazar-console.log
     logInfo(`Exporting Consumptions to ${format.toUpperCase()}:`, filteredData);
+
+    logger.log(`Exporting Consumptions to ${format.toUpperCase()}:`, filteredData);
+main
   };
 
   return (
