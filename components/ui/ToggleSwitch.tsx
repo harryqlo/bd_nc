@@ -28,7 +28,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   return (
     <div className={`flex items-center ${containerClassName}`}>
       {labelPosition === 'left' && (
-        <label htmlFor={id} className={`mr-3 text-sm font-medium text-gray-700 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
+        <label htmlFor={id} className={`mr-3 text-sm font-medium text-neutral-700 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
           {label}
         </label>
       )}
@@ -40,7 +40,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         onClick={handleToggle}
         disabled={disabled}
         className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-          ${checked ? 'bg-primary' : 'bg-gray-300'}
+          ${checked ? 'bg-primary' : 'bg-neutral-300'}
           ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
       >
         <span
@@ -49,7 +49,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         />
       </button>
       {labelPosition === 'right' && (
-        <label htmlFor={id} className={`ml-3 text-sm font-medium text-gray-700 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
+        <label htmlFor={id} className={`ml-3 text-sm font-medium text-neutral-700 ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
           {label}
         </label>
       )}

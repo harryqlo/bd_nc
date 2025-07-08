@@ -55,7 +55,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon, label, isSubItem = false })
         ${isSubItem ? 'pl-10' : ''} 
         ${specificActiveCheck
           ? 'bg-primary text-white dark:bg-primary-dark shadow-md'
-          : 'text-gray-700 dark:text-slate-300 hover:bg-primary-light/20 hover:text-primary-dark dark:hover:bg-primary-dark/30 dark:hover:text-primary-light'
+          : 'text-neutral-700 dark:text-slate-300 hover:bg-primary-light/20 hover:text-primary-dark dark:hover:bg-primary-dark/30 dark:hover:text-primary-light'
         }`
       }
     >
@@ -90,7 +90,7 @@ const ReportGroup: React.FC<ReportGroupProps> = ({ mainIcon, mainLabel, children
                 className={`flex items-center justify-between w-full px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ease-in-out group
                     ${isActiveGroup && !isOpen ? 'bg-primary-light/10 text-primary-dark dark:bg-primary-dark/20 dark:text-primary-light' : ''}
                     ${isActiveGroup && isOpen ? 'bg-primary text-white dark:bg-primary-dark shadow-md' : ''}
-                    ${!isActiveGroup ? 'text-gray-700 dark:text-slate-300 hover:bg-primary-light/20 hover:text-primary-dark dark:hover:bg-primary-dark/30 dark:hover:text-primary-light' : ''}`}
+                    ${!isActiveGroup ? 'text-neutral-700 dark:text-slate-300 hover:bg-primary-light/20 hover:text-primary-dark dark:hover:bg-primary-dark/30 dark:hover:text-primary-light' : ''}`}
             >
                 <div className="flex items-center">
                     <span className="w-6 h-6 mr-3">{mainIcon}</span>
@@ -114,7 +114,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="w-64 bg-white dark:bg-slate-800 shadow-lg flex flex-col">
-      <div className="h-16 flex items-center justify-center border-b border-gray-200 dark:border-slate-700 px-2">
+      <div className="h-16 flex items-center justify-center border-b border-neutral-200 dark:border-slate-700 px-2">
         <h1 className="text-xl font-bold text-primary dark:text-primary-light truncate" title={config.companyName || APP_NAME}>
           {config.companyName || APP_NAME}
         </h1>
@@ -152,8 +152,8 @@ export const Sidebar: React.FC = () => {
 
         {user?.role === UserRole.ADMIN && (
           <>
-            <div className="pt-4 mt-4 border-t border-gray-200 dark:border-slate-700">
-              <span className="px-4 text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase">Administración</span>
+            <div className="pt-4 mt-4 border-t border-neutral-200 dark:border-slate-700">
+              <span className="px-4 text-xs font-semibold text-neutral-500 dark:text-slate-400 uppercase">Administración</span>
             </div>
             <NavItem to="/admin/users" icon={<UsersIcon />} label="Gestión de Usuarios" />
             <NavItem to="/admin/user-roles-description" icon={<BookOpenIcon />} label="Descripción de Roles" />
@@ -162,8 +162,8 @@ export const Sidebar: React.FC = () => {
           </>
         )}
       </nav>
-      <div className="p-4 border-t border-gray-200 dark:border-slate-700">
-        <p className="text-xs text-center text-gray-500 dark:text-slate-400">© {new Date().getFullYear()} {config.companyName || APP_NAME}</p>
+      <div className="p-4 border-t border-neutral-200 dark:border-slate-700">
+        <p className="text-xs text-center text-neutral-500 dark:text-slate-400">© {new Date().getFullYear()} {config.companyName || APP_NAME}</p>
       </div>
     </div>
   );

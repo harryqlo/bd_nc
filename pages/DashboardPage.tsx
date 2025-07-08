@@ -46,8 +46,8 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data, title, maxBarHeig
 
   return (
     <Card title={title} bodyClassName="space-y-2">
-      {data.length === 0 ? <p className="text-sm text-gray-500 dark:text-slate-400">No hay datos para mostrar.</p> :
-      <div className="flex justify-around items-end h-[200px] p-2 border-b border-gray-200 dark:border-slate-700">
+      {data.length === 0 ? <p className="text-sm text-neutral-500 dark:text-slate-400">No hay datos para mostrar.</p> :
+      <div className="flex justify-around items-end h-[200px] p-2 border-b border-neutral-200 dark:border-slate-700">
         {data.map((item) => (
           <div key={item.label} className="flex flex-col items-center text-center w-1/4 px-1">
             <div 
@@ -56,8 +56,8 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data, title, maxBarHeig
               title={`${item.label}: ${item.value}`}
             >
             </div>
-            <p className="text-xs text-gray-600 dark:text-slate-400 mt-1 truncate w-full" title={item.label}>{item.label}</p>
-            <p className="text-xs font-semibold text-gray-700 dark:text-slate-300">{item.value}</p>
+            <p className="text-xs text-neutral-600 dark:text-slate-400 mt-1 truncate w-full" title={item.label}>{item.label}</p>
+            <p className="text-xs font-semibold text-neutral-700 dark:text-slate-300">{item.value}</p>
           </div>
         ))}
       </div>
@@ -157,11 +157,11 @@ const DashboardPage: React.FC = () => {
 
   return (
     <MainContainer className="space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Dashboard</h1>
-      <p className="text-lg text-gray-600 dark:text-slate-300">
+      <h1 className="text-3xl font-bold text-neutral-800 dark:text-slate-100">Dashboard</h1>
+      <p className="text-lg text-neutral-600 dark:text-slate-300">
         Bienvenido, <span className="font-semibold">{user?.username}</span>. Resumen del estado actual del sistema.
       </p>
-      {loading && <p className="text-sm text-gray-600 dark:text-slate-400">Cargando datos...</p>}
+      {loading && <p className="text-sm text-neutral-600 dark:text-slate-400">Cargando datos...</p>}
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -173,7 +173,7 @@ const DashboardPage: React.FC = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatCard title="Valor Total Inventario" value={`CLP ${totalInventoryValue.toLocaleString('es-CL')}`} icon={<CubeIcon className="w-10 h-10"/>} color="bg-teal-500" subtext="Suma de (Stock Actual * Valor Promedio)"/>
-        <StatCard title="Alertas Stock Crítico" value={criticalAlertsCount} icon={<CubeIcon className="w-10 h-10"/>} to="/inventory" color={criticalAlertsCount > 0 ? "bg-red-500" : "bg-gray-500"} subtext={criticalAlertsCount > 0 ? "Productos bajo el mínimo configurado." : "Todo el stock sobre el mínimo."}/>
+        <StatCard title="Alertas Stock Crítico" value={criticalAlertsCount} icon={<CubeIcon className="w-10 h-10"/>} to="/inventory" color={criticalAlertsCount > 0 ? "bg-red-500" : "bg-neutral-500"} subtext={criticalAlertsCount > 0 ? "Productos bajo el mínimo configurado." : "Todo el stock sobre el mínimo."}/>
       </div>
 
 
@@ -186,14 +186,14 @@ const DashboardPage: React.FC = () => {
         <Card title="Actividad Reciente (Máx. 4)">
           {recentActivity.length > 0 ? (
             <ul className="space-y-3">
-              {recentActivity.map((activity) => ( 
-                <li key={activity?.id} className="text-sm text-gray-700 dark:text-slate-300">
+              {recentActivity.map((activity) => (
+                <li key={activity?.id} className="text-sm text-neutral-700 dark:text-slate-300">
                   <Link to={activity?.link || '#'} className="hover:text-primary dark:hover:text-primary-light transition-colors">{activity?.text}</Link>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-gray-500 dark:text-slate-400">No hay actividad reciente para mostrar.</p>
+            <p className="text-sm text-neutral-500 dark:text-slate-400">No hay actividad reciente para mostrar.</p>
           )}
         </Card>
         <Card title="Alertas de Stock (Todas)">
@@ -213,7 +213,7 @@ const DashboardPage: React.FC = () => {
               ))}
             </ul>
            ) : (
-            <p className="text-sm text-gray-500 dark:text-slate-400">No hay alertas de stock en este momento.</p>
+            <p className="text-sm text-neutral-500 dark:text-slate-400">No hay alertas de stock en este momento.</p>
            )}
         </Card>
       </div>

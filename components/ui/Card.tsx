@@ -15,15 +15,15 @@ export const Card: React.FC<CardProps> = ({ title, children, className = '', tit
   return (
     <div className={`bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden ${className}`}>
       {title && (
-        <div className={`px-6 py-4 border-b border-gray-200 dark:border-slate-700 ${titleClassName}`}>
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-slate-100">{title}</h3>
+        <div className={`px-6 py-4 border-b border-neutral-200 dark:border-slate-700 ${titleClassName}`}>
+          <h3 className="text-xl font-semibold text-neutral-800 dark:text-slate-100">{title}</h3>
         </div>
       )}
       <div className={`p-6 ${bodyClassName}`}>
         {children}
       </div>
       {footer && (
-        <div className={`px-6 py-4 bg-gray-50 dark:bg-slate-700/50 border-t border-gray-200 dark:border-slate-700 ${footerClassName}`}>
+        <div className={`px-6 py-4 bg-neutral-50 dark:bg-slate-700/50 border-t border-neutral-200 dark:border-slate-700 ${footerClassName}`}>
           {footer}
         </div>
       )}
