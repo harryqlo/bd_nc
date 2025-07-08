@@ -8,6 +8,10 @@
     "build": "vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/global.css -o ./dist/output.css --minify",
     "test": "vitest",
+codex/add-vite-base-configuration-and-deploy-script
+
+
+ main
     "server": "node server/index.js"
   },
   "dependencies": {

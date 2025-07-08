@@ -3,7 +3,9 @@
 
 ## Descripción General
 
- codex/actualizar-readme-y-componentes-de-texto
+ codex/remove-stray-codex-and-main-tokens
+=======
+main
 **North Chrome LTDA - Gestión de Bodega** es una aplicación web completa para la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
 
 El sistema cuenta con un frontend en React y un backend REST desarrollado con Node.js que persiste la información en una base de datos MongoDB. Toda la lógica de negocio y la autenticación se ejecutan en el servidor, mientras que la interfaz se comunica mediante API.
@@ -11,7 +13,6 @@ El sistema cuenta con un frontend en React y un backend REST desarrollado con No
 **North Chrome LTDA - Gestión de Bodega** es una aplicación web que simula la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
 
 La capa principal sigue siendo el frontend, utilizando datos mock (simulados) para todas sus operaciones. Opcionalmente se incluye un pequeño backend escrito en **Node.js** con **Express** y **MongoDB**, el cual proporciona rutas REST básicas y autenticación mediante JWT. Este backend sirve como ejemplo para conectar la aplicación a una base de datos real.
- main
 
 ## Características Principales
 
@@ -153,7 +154,6 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 
 ## Configuración y Puesta en Marcha
 
-codex/actualizar-readme-y-componentes-de-texto
 1.  **Instalación de Dependencias**:
     *   Ejecuta `npm install` en la raíz del proyecto para instalar las dependencias del frontend.
     *   En el directorio del backend ejecuta `npm install` para preparar el servidor.
@@ -165,7 +165,6 @@ codex/actualizar-readme-y-componentes-de-texto
 2.  **Desarrollo Local**:
     *   Ejecuta `npm run server` para iniciar el backend de autenticación en `http://localhost:3001`.
     *   En otra terminal, usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
-main
 3.  **Compilación para Producción**: Ejecuta `npm run build` para generar la carpeta `dist` con todos los archivos estáticos listos para desplegar. Este comando también compila los estilos de Tailwind a `dist/output.css`.
 4.  **Pruebas**: Ejecuta `npm test` para correr la suite de tests con Vitest.
 5.  **Acceso**:
@@ -206,7 +205,6 @@ El código fuente está organizado en los siguientes directorios principales:
 
 ## Notas Importantes
 
- codex/actualizar-readme-y-componentes-de-texto
 *   **Arquitectura Cliente-Servidor**: La aplicación se apoya en un backend Node.js que expone una API REST para todas las operaciones de inventario.
 *   **Seguridad**: Las contraseñas se almacenan con hashing seguro y la autenticación utiliza tokens JWT con roles de usuario.
 *   **Exportación de Datos**: Los informes pueden exportarse a PDF, CSV o Excel desde la interfaz.
@@ -217,7 +215,6 @@ El código fuente está organizado en los siguientes directorios principales:
 *   **Rendimiento con Datos Mock**: Aunque se ha intentado que la UI sea fluida, el rendimiento con cantidades masivas de datos en los arrays mock puede verse afectado, ya que todas las operaciones de filtrado y ordenamiento se realizan en el cliente.
 *   **IDs Dinámicos**: Los nuevos elementos creados durante la sesión reciben IDs generados dinámicamente (ej. `prod_dyn_X`, `doc_dyn_X`). Estos no son persistentes entre sesiones completas de la aplicación.
 *   **Consistencia Global de Mocks**: Se ha hecho un esfuerzo para que los cambios en los arrays `MOCK_*` se reflejen globalmente en la sesión. Sin embargo, en una aplicación real, esto sería manejado por un estado global más robusto (como Redux/Zustand) o por la sincronización con un backend.
-main
 
 ## Posibles Mejoras Futuras
 

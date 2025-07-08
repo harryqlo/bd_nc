@@ -1,5 +1,4 @@
 const express = require('express');
-codex/implementar-autenticacion-y-almacenamiento-de-tokens
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -99,4 +98,3 @@ app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-main
