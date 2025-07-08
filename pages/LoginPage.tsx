@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
           </Button>
         </form>
         <p className="text-xs text-gray-500 mt-6 text-center">
-          Para demostración, use:
+          Credenciales de ejemplo:
           <br /> admin / admin123
           <br /> gestor / gestor123
           <br /> operador / operador123
