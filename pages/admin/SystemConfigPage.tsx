@@ -12,6 +12,7 @@ import { useConfig } from '../../contexts/ConfigContext';
 import { UserRole, SystemConfig } from '../../types';
 import { Navigate } from 'react-router-dom';
 import { logAuditEntry, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, MOCK_MATERIAL_REQUESTS, MOCK_USERS, MOCK_AUDIT_LOGS, MOCK_ADJUSTMENTS } from '../../constants';
+import { logInfo } from '../../utils/logger';
 import { downloadJSON, downloadCSV } from '../../utils/exportUtils';
 import { MainContainer } from '../../components/layout/MainContainer';
 import { logger } from '../../utils/logger';
@@ -115,7 +116,11 @@ const SystemConfigPage: React.FC = () => {
       documents: MOCK_DOCUMENTS.length,
       consumptions: MOCK_CONSUMPTIONS.length,
     };
+codex/revisar-y-reemplazar-console.log
+    logInfo('Diagnostics:', diagnostics);
+
     logger.log('Diagnostics:', diagnostics);
+main
     setMessage({ type: 'success', text: 'Diagnóstico completado. Sistema OK.' });
   }
   
