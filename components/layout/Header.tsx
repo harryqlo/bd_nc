@@ -29,7 +29,16 @@ export const Header: React.FC = () => {
         >
           <UserCircleIcon className="w-8 h-8 text-gray-600 dark:text-slate-400" />
           <span className="text-sm font-medium text-gray-900 dark:text-slate-200 hidden md:block">{user?.username} ({user?.role})</span>
-           <svg className={`w-4 h-4 text-gray-600 dark:text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+           <svg
+             className={`w-4 h-4 text-gray-600 dark:text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+             xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             strokeWidth="1.5"
+             stroke="currentColor"
+             aria-hidden="true"
+             focusable="false"
+           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </button>
