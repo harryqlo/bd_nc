@@ -134,7 +134,9 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 ## Configuración y Puesta en Marcha
 
 1.  **Instalación de Dependencias**: Ejecuta `npm install` en la raíz del proyecto.
-2.  **Desarrollo Local**: Usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
+2.  **Desarrollo Local**:
+    *   Ejecuta `npm run server` para iniciar el backend de autenticación en `http://localhost:3001`.
+    *   En otra terminal, usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
 3.  **Compilación para Producción**: Ejecuta `npm run build` para generar la carpeta `dist` con todos los archivos estáticos listos para desplegar. Este comando también compila los estilos de Tailwind a `dist/output.css`.
 4.  **Acceso**:
     *   Una vez abierta la aplicación en el navegador, serás dirigido a la página de Login.
