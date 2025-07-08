@@ -3,7 +3,7 @@
 
 ## Descripción General
 
- codex/actualizar-readme-y-componentes-de-texto
+
 **North Chrome LTDA - Gestión de Bodega** es una aplicación web completa para la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
 
 El sistema cuenta con un frontend en React y un backend REST desarrollado con Node.js que persiste la información en una base de datos MongoDB. Toda la lógica de negocio y la autenticación se ejecutan en el servidor, mientras que la interfaz se comunica mediante API.
