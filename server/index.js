@@ -2,10 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/products');
+const documentRoutes = require('./routes/documents');
+const userRoutes = require('./routes/users');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change_this_secret';
 
@@ -68,22 +79,6 @@ function authenticate(req, res, next) {
 app.get('/api/validate', authenticate, (req, res) => {
   res.json({ valid: true });
 });
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Backend listening on port ${PORT}`));
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const authRoutes = require('./routes/auth');
-const productRoutes = require('./routes/products');
-const documentRoutes = require('./routes/documents');
-const userRoutes = require('./routes/users');
-
-const app = express();
-app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
