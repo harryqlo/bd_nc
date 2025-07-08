@@ -12,6 +12,7 @@ import { MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_
 import { downloadCSV, downloadExcel, downloadPDF } from '../../utils/exportUtils';
 import { Table } from '../../components/ui/Table';
 import { TableColumn } from '../../types';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 
 const InformePersonalizadoPage: React.FC = () => {
@@ -162,7 +163,7 @@ const InformePersonalizadoPage: React.FC = () => {
 
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Creador de Informes Personalizados</h1>
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)} />}
 
@@ -239,7 +240,7 @@ const InformePersonalizadoPage: React.FC = () => {
           </div>
         </div>
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

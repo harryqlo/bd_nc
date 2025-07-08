@@ -10,6 +10,7 @@ import { Table } from '../../components/ui/Table';
 import { Alert } from '../../components/ui/Alert';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const formatCurrency = (value: number | undefined) => value ? new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value) : 'N/A';
 const formatDate = (dateString: string) => new Date(dateString).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'medium' });
@@ -141,7 +142,7 @@ const InformeMovimientosPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Informe de Movimientos de Inventario</h1>
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)}/>}
       <Card title="Filtros del Informe">
@@ -165,7 +166,7 @@ const InformeMovimientosPage: React.FC = () => {
         </div>
         <Table columns={columns} data={filteredData} keyExtractor={item => item.id} emptyMessage="No hay movimientos que coincidan con los filtros." />
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

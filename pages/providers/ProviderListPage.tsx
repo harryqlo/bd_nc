@@ -9,6 +9,7 @@ import ProviderForm from '../../components/providers/ProviderForm';
 import { PlusIcon, PencilIcon, TrashIcon, logAuditEntry } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
+import { MainContainer } from '../../components/layout/MainContainer';
 import { MOCK_PROVIDERS } from '../../constants';
 
 const ProviderListPage: React.FC = () => {
@@ -154,7 +155,7 @@ const ProviderListPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Gestión de Proveedores</h1>
         {canManage && (
@@ -223,7 +224,7 @@ const ProviderListPage: React.FC = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </MainContainer>
   );
 };
 

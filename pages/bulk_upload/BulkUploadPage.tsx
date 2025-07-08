@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/Button';
 import { Select } from '../../components/ui/Select';
 import { Alert } from '../../components/ui/Alert';
 import { ArrowUpTrayIcon, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES } from '../../constants';
+import { MainContainer } from '../../components/layout/MainContainer';
 import { Product, Category, Provider } from '../../types';
 
 const BulkUploadPage: React.FC = () => {
@@ -292,7 +293,7 @@ const BulkUploadPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Carga Masiva de Datos</h1>
       
       {uploadStatus && <Alert type={uploadStatus.type} message={uploadStatus.message} onClose={() => setUploadStatus(null)} />}
@@ -364,7 +365,7 @@ const BulkUploadPage: React.FC = () => {
             </li>
         </ul>
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

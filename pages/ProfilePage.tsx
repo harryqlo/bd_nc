@@ -5,6 +5,7 @@ import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
+import { MainContainer } from '../components/layout/MainContainer';
 
 const ProfilePage: React.FC = () => {
   const { user, login } = useAuth(); 
@@ -42,7 +43,7 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-2xl mx-auto">
+    <MainContainer className="space-y-6 max-w-2xl">
       <h1 className="text-3xl font-bold text-gray-800">Mi Perfil</h1>
       
       <Card title="Información de Usuario">
@@ -82,7 +83,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </form>
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

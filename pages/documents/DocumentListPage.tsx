@@ -6,6 +6,7 @@ import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Table } from '../../components/ui/Table';
 import { Card } from '../../components/ui/Card';
+import { MainContainer } from '../../components/layout/MainContainer';
 import DocumentForm from '../../components/documents/DocumentForm';
 import { PlusIcon, EyeIcon, PaperClipIcon, XCircleIcon, MOCK_DOCUMENTS, MOCK_PROVIDERS, logAuditEntry } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -157,7 +158,7 @@ const DocumentListPage: React.FC = () => {
 
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-3xl font-bold text-gray-800">Documentos de Ingreso</h1>
         {canManage && (
@@ -207,7 +208,7 @@ const DocumentListPage: React.FC = () => {
           isReadOnly={!!viewingDocument && !canManage} // Admin/Manager can edit, others only view if documentData exists
         />
       )}
-    </div>
+    </MainContainer>
   );
 };
 

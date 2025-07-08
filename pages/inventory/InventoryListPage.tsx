@@ -18,6 +18,7 @@ import {
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
 import { Card } from '../../components/ui/Card';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value);
@@ -359,7 +360,7 @@ const InventoryListPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Gestión de Inventario</h1>
         <div className="flex space-x-3">
@@ -490,7 +491,7 @@ const InventoryListPage: React.FC = () => {
         </div>
       </Modal>
 
-    </div>
+    </MainContainer>
   );
 };
 

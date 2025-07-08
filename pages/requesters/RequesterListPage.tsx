@@ -10,6 +10,7 @@ import { PlusIcon, PencilIcon, TrashIcon, MOCK_SOLICITANTES, logAuditEntry } fro
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
 import { Navigate } from 'react-router-dom';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 
 const RequesterListPage: React.FC = () => {
@@ -124,7 +125,7 @@ const RequesterListPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800">Gestión de Solicitantes</h1>
         {canManage && (
@@ -183,7 +184,7 @@ const RequesterListPage: React.FC = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </MainContainer>
   );
 };
 
