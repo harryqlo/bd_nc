@@ -116,11 +116,9 @@ const SystemConfigPage: React.FC = () => {
       documents: MOCK_DOCUMENTS.length,
       consumptions: MOCK_CONSUMPTIONS.length,
     };
-codex/revisar-y-reemplazar-console.log
     logInfo('Diagnostics:', diagnostics);
 
     logger.log('Diagnostics:', diagnostics);
-main
     setMessage({ type: 'success', text: 'Diagnóstico completado. Sistema OK.' });
   }
   
