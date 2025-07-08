@@ -24,11 +24,11 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-75 transition-opacity duration-300 ease-in-out">
       <div className={`bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 m-4 w-full ${sizeClasses[size]} transform transition-all duration-300 ease-in-out scale-100`}>
         {title && (
-          <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 dark:border-slate-700">
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-slate-100">{title}</h3>
+          <div className="flex justify-between items-center mb-4 pb-2 border-b border-neutral-200 dark:border-slate-700">
+            <h3 className="text-xl font-semibold text-neutral-800 dark:text-slate-100">{title}</h3>
             <button
               onClick={onClose}
-              className="text-gray-400 dark:text-slate-400 hover:text-gray-600 dark:hover:text-slate-200 transition-colors"
+              className="text-neutral-400 dark:text-slate-400 hover:text-neutral-600 dark:hover:text-slate-200 transition-colors"
               aria-label="Cerrar modal"
             >
               <svg
