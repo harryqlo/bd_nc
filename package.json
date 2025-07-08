@@ -7,11 +7,8 @@
     "dev": "vite",
     "build": "vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/global.css -o ./dist/output.css --minify",
-codex/instalar-jest-o-vitest-y-configurar-pruebas
-    "test": "vitest"
-
+    "test": "vitest",
     "server": "node server/index.js"
-main
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -38,5 +35,6 @@ main
     "typescript": "^5.8.3",
     "vite": "^7.0.3",
     "vitest": "^3.2.4"
-  }
+  },
+  "homepage": "https://<username>.github.io/north-chrome-ltda-gestion-de-bodega"
 }
