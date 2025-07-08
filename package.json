@@ -4,6 +4,18 @@
   "description": "Aplicación web para la gestión de inventario, documentos, usuarios y configuraciones de bodega de North Chrome LTDA.",
   "private": true,
   "scripts": {
-    "build": "node ./scripts/build.js"
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.6.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.3"
   }
 }

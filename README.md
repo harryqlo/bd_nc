@@ -132,22 +132,22 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 *   **ES6 Modules**: Estructura de módulos estándar de JavaScript.
 *   **Datos Mock**: Todos los datos son simulados y almacenados en constantes (`constants.tsx`).
 
-## Configuración y Puesta en Marcha (Demostración)
+## Configuración y Puesta en Marcha
 
-Dado que es una aplicación frontend pura sin backend:
-
-1.  **Obtener el Código**: Clona o descarga el repositorio/archivos del proyecto.
-2.  **Servir la Aplicación**:
-    *   La forma más sencilla es abrir el archivo `index.html` directamente en un navegador web moderno (Firefox, Chrome, Edge).
-    *   Para una mejor experiencia (y evitar problemas con algunas APIs si se usaran rutas absolutas o features específicas), se recomienda servir los archivos a través de un servidor HTTP local.
-        *   Si tienes Node.js, puedes usar `npx serve .` en el directorio raíz del proyecto.
-        *   Extensiones de VS Code como "Live Server" también facilitan esto.
-3.  **Acceso**:
+1.  **Instalación de Dependencias**: Ejecuta `npm install` en la raíz del proyecto.
+2.  **Desarrollo Local**: Usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
+3.  **Compilación para Producción**: Ejecuta `npm run build` para generar la carpeta `dist` con todos los archivos estáticos listos para desplegar.
+4.  **Acceso**:
     *   Una vez abierta la aplicación en el navegador, serás dirigido a la página de Login.
     *   Credenciales de demostración (usuario/contraseña):
         *   `admin` / `admin123`
         *   `gestor` / `gestor123`
         *   `operador` / `operador123`
+
+### Despliegue en Netlify
+
+1.  Crea un nuevo sitio en Netlify y conecta este repositorio.
+2.  Netlify ejecutará `npm run build` utilizando `netlify.toml` y publicará el contenido de la carpeta `dist`.
 
 ## Persistencia de Datos
 
@@ -197,4 +197,3 @@ El código fuente está organizado en los siguientes directorios principales:
 ---
 
 Hecho con ❤️ para North Chrome LTDA.
-```
