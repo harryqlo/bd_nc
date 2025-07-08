@@ -3,9 +3,9 @@
 
 ## Descripción General
 
-**North Chrome LTDA - Gestión de Bodega** es una aplicación web frontend diseñada para simular la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
+**North Chrome LTDA - Gestión de Bodega** es una aplicación web que simula la administración y el control de inventario de una bodega industrial. Permite gestionar productos, documentos de ingreso, consumos por órdenes de trabajo, proveedores, solicitantes, solicitudes de materiales, usuarios y configuraciones del sistema.
 
-Esta aplicación está construida como una **demostración frontend completa**, utilizando datos mock (simulados) para todas sus operaciones. No requiere un backend para funcionar, ya que toda la lógica de negocio y persistencia de datos (para la sesión actual y configuraciones básicas) se maneja en el lado del cliente.
+La capa principal sigue siendo el frontend, utilizando datos mock (simulados) para todas sus operaciones. Opcionalmente se incluye un pequeño backend escrito en **Node.js** con **Express** y **MongoDB**, el cual proporciona rutas REST básicas y autenticación mediante JWT. Este backend sirve como ejemplo para conectar la aplicación a una base de datos real.
 
 ## Características Principales
 
@@ -131,6 +131,19 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 *   **ES6 Modules**: Estructura de módulos estándar de JavaScript.
 *   **Datos Mock**: Todos los datos son simulados y almacenados en constantes (`constants.tsx`).
 
+## Pila Tecnológica (Backend)
+
+* **Node.js** y **Express** para el servidor HTTP.
+* **MongoDB** como base de datos con **Mongoose** para la capa ODM.
+* **JSON Web Tokens (JWT)** para la autenticación de usuarios.
+
+### Inicio Rápido del Backend
+
+1. Ve a la carpeta `server/` y ejecuta `npm install`.
+2. Copia `.env.example` a `.env` y ajusta `MONGO_URI` y `JWT_SECRET`.
+3. Inicia el backend con `npm start` (puerto por defecto `4000`).
+4. Las rutas REST estarán disponibles bajo `/api`.
+
 ## Configuración y Puesta en Marcha
 
 1.  **Instalación de Dependencias**: Ejecuta `npm install` en la raíz del proyecto.
@@ -172,10 +185,11 @@ El código fuente está organizado en los siguientes directorios principales:
 *   `index.html`: El archivo HTML principal que carga la aplicación.
 *   `metadata.json`: Metadatos para la plataforma que hospeda la aplicación (si aplica).
 *   `README.md`: Este archivo.
+*   `server/`: Backend opcional con Express y MongoDB.
 
 ## Notas Importantes y Limitaciones de la Demo
 
-*   **Frontend Puro**: Esta es una demostración de interfaz de usuario y lógica de frontend. No hay un backend real ni base de datos. Todas las "llamadas API" son simuladas.
+*   **Frontend Primero**: La aplicación está pensada como una demo de interfaz. El backend incluido es opcional y de alcance limitado.
 *   **Seguridad Simplificada**: La autenticación y la gestión de contraseñas están altamente simplificadas y no son seguras para un entorno de producción.
 *   **Funcionalidades Parcialmente Implementadas**: La exportación a PDF sigue limitada a una impresión básica desde el navegador.
 *   **Rendimiento con Datos Mock**: Aunque se ha intentado que la UI sea fluida, el rendimiento con cantidades masivas de datos en los arrays mock puede verse afectado, ya que todas las operaciones de filtrado y ordenamiento se realizan en el cliente.
