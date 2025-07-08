@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { UserRole } from '../types';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
@@ -19,21 +18,23 @@ const LoginPage: React.FC = () => {
     navigate('/'); // Redirect if already logged in
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    // Mock authentication
-    if ((username === 'admin' && password === 'admin123') || 
-        (username === 'gestor' && password === 'gestor123') ||
-        (username === 'operador' && password === 'operador123')) {
-      let role = UserRole.WAREHOUSE_OPERATOR;
-      if (username === 'admin') role = UserRole.ADMIN;
-      if (username === 'gestor') role = UserRole.WAREHOUSE_MANAGER;
-      
-      login(username, role);
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      if (!res.ok) {
+        throw new Error('Credenciales incorrectas');
+      }
+      const data = await res.json();
+      login(data.user, data.token);
       navigate('/');
-    } else {
-      setError('Credenciales incorrectas. Intente: admin/admin123, gestor/gestor123, o operador/operador123');
+    } catch (err: any) {
+      setError(err.message || 'Error al iniciar sesión');
     }
   };
 
