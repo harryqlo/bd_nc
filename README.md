@@ -179,6 +179,10 @@ Una descripción más detallada de los permisos por rol se encuentra en la secci
 1.  Crea un nuevo sitio en Netlify y conecta este repositorio.
 2.  Netlify ejecutará `npm run build` utilizando `netlify.toml` y publicará el contenido de la carpeta `dist`.
 
+### Hospedaje del Backend
+
+El backend Express debe ejecutarse en un servicio aparte, ya que **GitHub Pages solo admite contenido estático**. Puedes desplegar la carpeta `server/` en plataformas que soporten Node.js, por ejemplo [Render](https://render.com/docs/deploy-node-express-app) o una función serverless en Netlify.
+
 ## Persistencia de Datos
 
 *   **Datos de la Aplicación**: Toda la información (productos, documentos, consumos, etc.) se almacena de forma persistente en MongoDB mediante el backend.
@@ -206,6 +210,7 @@ El código fuente está organizado en los siguientes directorios principales:
 ## Notas Importantes
 
 *   **Arquitectura Cliente-Servidor**: La aplicación se apoya en un backend Node.js que expone una API REST para todas las operaciones de inventario.
+*   **Backend por Separado**: El servidor Express debe hospedarse en un servicio externo y **no** puede ejecutarse en GitHub Pages.
 *   **Seguridad**: Las contraseñas se almacenan con hashing seguro y la autenticación utiliza tokens JWT con roles de usuario.
 *   **Exportación de Datos**: Los informes pueden exportarse a PDF, CSV o Excel desde la interfaz.
 *   **Escalabilidad**: El sistema persiste la información en MongoDB y puede ejecutarse en entornos de producción.
