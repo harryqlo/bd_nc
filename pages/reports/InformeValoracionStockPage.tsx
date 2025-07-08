@@ -10,6 +10,7 @@ import { Alert } from '../../components/ui/Alert';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MainContainer } from '../../components/layout/MainContainer';
+import { logger } from '../../utils/logger';
 
 const formatCurrency = (value: number) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value);
 
@@ -74,7 +75,7 @@ const InformeValoracionStockPage: React.FC = () => {
 
   const handleExport = (format: 'csv' | 'pdf' | 'excel') => {
      setAlertMessage({type: 'info', message: `Exportando datos a ${format.toUpperCase()}...`});
-     console.log(`Exporting Stock Valuation to ${format.toUpperCase()}:`, filteredData);
+     logger.log(`Exporting Stock Valuation to ${format.toUpperCase()}:`, filteredData);
   };
 
   return (
