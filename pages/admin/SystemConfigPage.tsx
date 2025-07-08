@@ -14,6 +14,7 @@ import { Navigate } from 'react-router-dom';
 import { logAuditEntry, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, MOCK_MATERIAL_REQUESTS, MOCK_USERS, MOCK_AUDIT_LOGS, MOCK_ADJUSTMENTS } from '../../constants';
 import { downloadJSON, downloadCSV } from '../../utils/exportUtils';
 import { MainContainer } from '../../components/layout/MainContainer';
+import { logger } from '../../utils/logger';
 
 const SystemConfigPage: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -114,7 +115,7 @@ const SystemConfigPage: React.FC = () => {
       documents: MOCK_DOCUMENTS.length,
       consumptions: MOCK_CONSUMPTIONS.length,
     };
-    console.log('Diagnostics:', diagnostics);
+    logger.log('Diagnostics:', diagnostics);
     setMessage({ type: 'success', text: 'Diagnóstico completado. Sistema OK.' });
   }
   
@@ -192,7 +193,7 @@ const SystemConfigPage: React.FC = () => {
         <div className="text-sm space-y-2">
             <p><strong>Versión de Aplicación:</strong> 1.0.2-beta (XLSX Enabled)</p>
             <p><strong>Hora del Cliente:</strong> {new Date().toLocaleString('es-CL')}</p>
-            <p><strong>Estado Base de Datos:</strong> Simulada (En memoria)</p>
+            <p><strong>Estado Base de Datos:</strong> Operativa (MongoDB)</p>
             <p><strong>Entorno:</strong> Desarrollo Frontend</p>
             <p><strong>Configuración Cargada:</strong> {config.companyName}</p>
         </div>

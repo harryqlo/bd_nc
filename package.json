@@ -7,13 +7,21 @@
     "dev": "vite",
     "build": "vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/global.css -o ./dist/output.css --minify",
+codex/instalar-jest-o-vitest-y-configurar-pruebas
     "test": "vitest"
+
+    "server": "node server/index.js"
+main
   },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",

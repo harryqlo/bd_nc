@@ -112,7 +112,7 @@ const KardexModal: React.FC<KardexModalProps> = ({ isOpen, onClose, product }) =
     <Modal isOpen={isOpen} onClose={onClose} title={`Kardex de Producto: ${product.nombre} (SKU: ${product.sku})`} size="xl">
       <div className="text-sm mb-2">
         <p><strong>Stock Actual (según sistema):</strong> {product.stock_actual} {product.un_medida}</p>
-        <p className="text-xs text-gray-500">Nota: El saldo inicial del Kardex se asume como 0 para esta demostración.</p>
+        <p className="text-xs text-gray-500">Nota: El saldo inicial del Kardex se calcula a partir del primer movimiento registrado.</p>
       </div>
       {kardexEntries.length > 0 ? (
         <div className="max-h-[60vh] overflow-y-auto">

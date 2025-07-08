@@ -6,7 +6,8 @@ import { Input } from '../../components/ui/Input';
 import { Table } from '../../components/ui/Table';
 import { Modal } from '../../components/ui/Modal';
 import UserForm from '../../components/admin/UserForm';
-import { PlusIcon, PencilIcon, TrashIcon, MOCK_USERS, logAuditEntry } from '../../constants'; 
+import { PlusIcon, PencilIcon, TrashIcon, logAuditEntry } from '../../constants';
+import { fetchUsers } from '../../utils/api';
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
 import { Navigate } from 'react-router-dom';
@@ -14,22 +15,32 @@ import { MainContainer } from '../../components/layout/MainContainer';
 
 const UserManagementPage: React.FC = () => {
   const { user: currentUser } = useAuth();
-  const [users, setUsers] = useState<User[]>([...MOCK_USERS]); // Local state
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState<{type: 'success' | 'error', message: string} | null>(null);
-  const newUserIdCounter = useRef(MOCK_USERS.filter(u => !u.id.startsWith("user_init_")).length + 1);
+  const newUserIdCounter = useRef(1);
 
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
 
   useEffect(() => {
-     // If MOCK_USERS is ever changed by another part of the app and this component needs to reflect it immediately
-     // This basic sync might be needed, or a more robust global state solution for mocks.
-     // For now, assuming MOCK_USERS is primarily managed here or is stable.
-     // setUsers([...MOCK_USERS]);
+    setLoading(true);
+    fetchUsers()
+      .then(data => {
+        setUsers(data);
+        newUserIdCounter.current = data.length + 1;
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Error al cargar usuarios');
+        setLoading(false);
+      });
   }, []);
 
 
@@ -76,10 +87,6 @@ const UserManagementPage: React.FC = () => {
     const updatedUsers = users.filter(u => u.id !== userToDelete.id);
     setUsers(updatedUsers);
     
-    const MOCK_USERS_Index = MOCK_USERS.findIndex(u => u.id === userToDelete.id);
-    if (MOCK_USERS_Index !== -1) {
-      MOCK_USERS.splice(MOCK_USERS_Index, 1);
-    }
     logAuditEntry(currentUser.username, "USUARIO_ELIMINADO", `Usuario '${userToDelete.username}' (ID: ${userToDelete.id}) eliminado.`);
     setAlertMessage({ type: 'success', message: `Usuario ${userToDelete.username} eliminado correctamente.` });
     setIsConfirmDeleteModalOpen(false);
@@ -92,15 +99,12 @@ const UserManagementPage: React.FC = () => {
     let updatedUsers;
     if (editingUser) { // Editing existing user
       updatedUsers = users.map(u => u.id === userToSave.id ? userToSave : u);
-      const MOCK_USERS_Index = MOCK_USERS.findIndex(u => u.id === userToSave.id);
-      if (MOCK_USERS_Index !== -1) MOCK_USERS[MOCK_USERS_Index] = userToSave;
       logAuditEntry(currentUser.username, "USUARIO_ACTUALIZADO", `Usuario '${userToSave.username}' (ID: ${userToSave.id}) actualizado. Rol: ${userToSave.role}.`);
       setAlertMessage({ type: 'success', message: `Usuario ${userToSave.username} actualizado.` });
     } else { // Adding new user
       const newGeneratedId = `user_dyn_${newUserIdCounter.current++}`;
       const newUserWithId = { ...userToSave, id: newGeneratedId };
       updatedUsers = [newUserWithId, ...users];
-      MOCK_USERS.unshift(newUserWithId); // Add to global MOCK_USERS
       logAuditEntry(currentUser.username, "USUARIO_CREADO", `Usuario '${newUserWithId.username}' (ID: ${newGeneratedId}) creado con rol ${newUserWithId.role}.`);
       setAlertMessage({ type: 'success', message: `Usuario ${newUserWithId.username} creado con ID: ${newGeneratedId}. ${password ? `Contraseña (demo): ${password}`: ''}` });
     }
@@ -138,6 +142,8 @@ const UserManagementPage: React.FC = () => {
         </Button>
       </div>
 
+      {loading && <p className="text-sm text-gray-600">Cargando usuarios...</p>}
+      {error && <Alert type="error" message={error} onClose={() => setError(null)} />}
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)} />}
 
       <Input
