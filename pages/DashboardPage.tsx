@@ -4,8 +4,9 @@ import { Card } from '../components/ui/Card';
 import { CubeIcon, DocumentTextIcon, UsersIcon, TruckIcon, IdentificationIcon, ClipboardDocumentListIcon } from '../constants';
 import { Link } from 'react-router-dom';
 import { MainContainer } from '../components/layout/MainContainer';
-import { MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_DOCUMENTS, MOCK_USERS, MOCK_CONSUMPTIONS, MOCK_PROVIDERS, MOCK_SOLICITANTES, MOCK_CATEGORIES, getCategoryNameById } from '../constants';
-import { Product } from '../types';
+import { MOCK_DOCUMENTS, MOCK_CONSUMPTIONS, MOCK_PROVIDERS, MOCK_SOLICITANTES, MOCK_CATEGORIES, getCategoryNameById } from '../constants';
+import { Product, User } from '../types';
+import { fetchProducts, fetchUsers } from '../utils/api';
 
 const StatCard: React.FC<{ title: string, value: string | number, icon: React.ReactNode, to?: string, color: string, subtext?: string }> = ({ title, value, icon, to, color, subtext }) => {
   const content = (
@@ -68,8 +69,27 @@ const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data, title, maxBarHeig
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
+  const [products, setProducts] = React.useState<Product[]>([]);
+  const [usersData, setUsersData] = React.useState<User[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const stockAlerts = MOCK_PRODUCTS_FOR_CONSUMPTION.map(product => {
+  React.useEffect(() => {
+    setLoading(true);
+    Promise.all([fetchProducts(), fetchUsers()])
+      .then(([prodData, userData]) => {
+        setProducts(prodData);
+        setUsersData(userData);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Error al cargar datos');
+        setLoading(false);
+      });
+  }, []);
+
+  const stockAlerts = products.map(product => {
     const stockMin = product.stock_min ?? 0;
     if (product.stock_actual <= stockMin && stockMin > 0) { // Only alert if stock_min is defined and > 0
       return { type: 'error', message: `${product.sku} - ${product.nombre}: Stock BAJO (${product.stock_actual} / Mín: ${stockMin}).`, product };
@@ -82,11 +102,11 @@ const DashboardPage: React.FC = () => {
 
   const criticalAlertsCount = stockAlerts.filter(a => a?.type === 'error').length;
 
-  const totalInventoryValue = MOCK_PRODUCTS_FOR_CONSUMPTION.reduce((sum, p) => sum + (p.stock_actual * p.valor_promedio), 0);
+  const totalInventoryValue = products.reduce((sum, p) => sum + (p.stock_actual * p.valor_promedio), 0);
 
   // Data for "Productos por Categoría" chart
   const productsByCategory: { [key: string]: number } = {};
-  MOCK_PRODUCTS_FOR_CONSUMPTION.forEach(product => {
+  products.forEach(product => {
     const categoryName = getCategoryNameById(product.categoria_id);
     productsByCategory[categoryName] = (productsByCategory[categoryName] || 0) + 1;
   });
@@ -122,9 +142,9 @@ const DashboardPage: React.FC = () => {
         text: `Consumo para OT ${cons.numero_ot} por ${cons.solicitante_nombre}.`,
         link: '/consumptions'
     })) : []),
-     MOCK_USERS.length > 0 ? { // Keep user activity if needed, or make conditional like others
-        id: `user-${MOCK_USERS[MOCK_USERS.length - 1].id}`,
-        text: `Usuario '${MOCK_USERS[MOCK_USERS.length - 1].username}' se unió.`,
+     usersData.length > 0 ? {
+        id: `user-${usersData[usersData.length - 1].id}`,
+        text: `Usuario '${usersData[usersData.length - 1].username}' se unió.`,
         link: '/admin/users'
     } : null,
     MOCK_PROVIDERS.length > 0 ? {
@@ -141,9 +161,11 @@ const DashboardPage: React.FC = () => {
       <p className="text-lg text-gray-600 dark:text-slate-300">
         Bienvenido, <span className="font-semibold">{user?.username}</span>. Resumen del estado actual del sistema.
       </p>
+      {loading && <p className="text-sm text-gray-600 dark:text-slate-400">Cargando datos...</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-        <StatCard title="Productos Únicos" value={MOCK_PRODUCTS_FOR_CONSUMPTION.length} icon={<CubeIcon className="w-10 h-10"/>} to="/inventory" color="bg-blue-500"/>
+        <StatCard title="Productos Únicos" value={products.length} icon={<CubeIcon className="w-10 h-10"/>} to="/inventory" color="bg-blue-500"/>
         <StatCard title="Documentos" value={MOCK_DOCUMENTS.length} icon={<DocumentTextIcon className="w-10 h-10"/>} to="/documents" color="bg-green-500"/>
         <StatCard title="Consumos" value={MOCK_CONSUMPTIONS.length} icon={<ClipboardDocumentListIcon className="w-10 h-10"/>} to="/consumptions" color="bg-indigo-500"/>
         <StatCard title="Proveedores" value={MOCK_PROVIDERS.length} icon={<TruckIcon className="w-10 h-10"/>} to="/providers" color="bg-purple-500"/>
