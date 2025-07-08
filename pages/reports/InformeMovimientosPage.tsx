@@ -8,6 +8,7 @@ import { Select } from '../../components/ui/Select';
 import { Button } from '../../components/ui/Button';
 import { Table } from '../../components/ui/Table';
 import { Alert } from '../../components/ui/Alert';
+import { logInfo } from '../../utils/logger';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MainContainer } from '../../components/layout/MainContainer';
@@ -138,7 +139,7 @@ const InformeMovimientosPage: React.FC = () => {
 
   const handleExport = (format: 'csv' | 'pdf' | 'excel') => {
     setAlertMessage({type: 'info', message: `Exportando datos a ${format.toUpperCase()}...`});
-    console.log(`Exporting Movements to ${format.toUpperCase()}:`, filteredData);
+    logInfo(`Exporting Movements to ${format.toUpperCase()}:`, filteredData);
   };
 
   return (
