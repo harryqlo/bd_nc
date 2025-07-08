@@ -39,11 +39,11 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-light via-primary to-primary-dark p-4">
+    <div className="min-h-screen flex items-center justify-center bg-primary p-4">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-primary">{APP_NAME}</h1>
-          <p className="text-gray-600 mt-2">Bienvenido, por favor inicie sesión.</p>
+          <p className="text-neutral-600 mt-2">Bienvenido, por favor inicie sesión.</p>
         </div>
         
         {error && <Alert type="error" message={error} onClose={() => setError('')} className="mb-6"/>}
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
             Iniciar Sesión
           </Button>
         </form>
-        <p className="text-xs text-gray-500 mt-6 text-center">
+        <p className="text-xs text-neutral-500 mt-6 text-center">
           Credenciales de ejemplo:
           <br /> admin / admin123
           <br /> gestor / gestor123

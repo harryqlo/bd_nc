@@ -18,19 +18,19 @@ export const Header: React.FC = () => {
     <header className="h-16 bg-white dark:bg-slate-800 shadow-md flex items-center justify-between px-6 border-b dark:border-slate-700">
       <div>
         {/* Breadcrumbs or page title can go here */}
-        <h2 className="text-lg font-semibold text-gray-700 dark:text-slate-200">Bienvenido</h2>
+        <h2 className="text-lg font-semibold text-neutral-700 dark:text-slate-200">Bienvenido</h2>
       </div>
       <div className="relative">
         <button 
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-light transition-colors"
+          className="flex items-center space-x-2 p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-light transition-colors"
           aria-expanded={dropdownOpen}
           aria-haspopup="true"
         >
-          <UserCircleIcon className="w-8 h-8 text-gray-600 dark:text-slate-400" />
-          <span className="text-sm font-medium text-gray-900 dark:text-slate-200 hidden md:block">{user?.username} ({user?.role})</span>
+          <UserCircleIcon className="w-8 h-8 text-neutral-600 dark:text-slate-400" />
+          <span className="text-sm font-medium text-neutral-900 dark:text-slate-200 hidden md:block">{user?.username} ({user?.role})</span>
            <svg
-             className={`w-4 h-4 text-gray-600 dark:text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+             className={`w-4 h-4 text-neutral-600 dark:text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
              xmlns="http://www.w3.org/2000/svg"
              fill="none"
              viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ export const Header: React.FC = () => {
           >
             <button
               onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
-              className="block w-full text-left px-4 py-2 text-sm text-gray-900 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-600 hover:text-primary-dark dark:hover:text-primary-light transition-colors"
+              className="block w-full text-left px-4 py-2 text-sm text-neutral-900 dark:text-slate-200 hover:bg-neutral-100 dark:hover:bg-slate-600 hover:text-primary-dark dark:hover:text-primary-light transition-colors"
               role="menuitem"
             >
               Mi Perfil

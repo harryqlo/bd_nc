@@ -41,7 +41,7 @@ export const Button = <C extends ElementType = typeof defaultElement>({
 
   const variantStyles = {
     primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
+    secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary',
     danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
     ghost: 'bg-transparent text-primary hover:bg-primary-light/20 focus:ring-primary',
     outline: 'bg-transparent text-primary border border-primary hover:bg-primary-light/20 focus:ring-primary'
