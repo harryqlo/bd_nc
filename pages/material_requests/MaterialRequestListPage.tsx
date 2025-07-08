@@ -7,6 +7,7 @@ import { Select } from '../../components/ui/Select';
 import { Table } from '../../components/ui/Table';
 import { Modal } from '../../components/ui/Modal';
 import { Card } from '../../components/ui/Card';
+import { MainContainer } from '../../components/layout/MainContainer';
 import MaterialRequestForm from '../../components/material_requests/MaterialRequestForm';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon, XCircleIcon, MOCK_SOLICITANTES, MOCK_MATERIAL_REQUESTS, MOCK_PROVIDERS, MOCK_DOCUMENTS, logAuditEntry } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -207,7 +208,7 @@ const MaterialRequestListPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Solicitudes de Materiales</h1>
         {canCreateMaterialRequests && (
@@ -278,7 +279,7 @@ const MaterialRequestListPage: React.FC = () => {
         </div>
       </Modal>
 
-    </div>
+    </MainContainer>
   );
 };
 

@@ -10,6 +10,7 @@ import { Table } from '../../components/ui/Table';
 import { Alert } from '../../components/ui/Alert';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const formatCurrency = (value: number) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(value);
 const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString('es-CL');
@@ -121,7 +122,7 @@ const InformeConsumosPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Informe de Consumos</h1>
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)}/>}
       <Card title="Filtros del Informe">
@@ -153,7 +154,7 @@ const InformeConsumosPage: React.FC = () => {
         </div>
         <Table columns={columns} data={filteredData} keyExtractor={item => `${item.consumo_id}-${item.item_id}`} emptyMessage="No hay consumos que coincidan con los filtros." />
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

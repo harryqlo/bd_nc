@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Card } from '../components/ui/Card';
 import { CubeIcon, DocumentTextIcon, UsersIcon, TruckIcon, IdentificationIcon, ClipboardDocumentListIcon } from '../constants';
 import { Link } from 'react-router-dom';
+import { MainContainer } from '../components/layout/MainContainer';
 import { MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_DOCUMENTS, MOCK_USERS, MOCK_CONSUMPTIONS, MOCK_PROVIDERS, MOCK_SOLICITANTES, MOCK_CATEGORIES, getCategoryNameById } from '../constants';
 import { Product } from '../types';
 
@@ -135,7 +136,7 @@ const DashboardPage: React.FC = () => {
 
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Dashboard</h1>
       <p className="text-lg text-gray-600 dark:text-slate-300">
         Bienvenido, <span className="font-semibold">{user?.username}</span>. Resumen del estado actual del sistema.
@@ -194,7 +195,7 @@ const DashboardPage: React.FC = () => {
            )}
         </Card>
       </div>
-    </div>
+    </MainContainer>
   );
 };
 

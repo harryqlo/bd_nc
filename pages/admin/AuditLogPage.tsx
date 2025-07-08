@@ -10,6 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MOCK_AUDIT_LOGS } from '../../constants';
 import { downloadCSV } from '../../utils/exportUtils';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'medium' });
@@ -74,7 +75,7 @@ const AuditLogPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800">Log de Auditoría del Sistema</h1>
       
       <Card title="Filtros de Búsqueda">
@@ -114,7 +115,7 @@ WARN: 2024-07-25 11:20:00 - BulkUpload: File 'categorias_viejas.csv' contained 3
         </pre>
          <Button variant="outline" className="mt-4" onClick={handleDownloadLog}>Descargar sistema.log</Button>
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

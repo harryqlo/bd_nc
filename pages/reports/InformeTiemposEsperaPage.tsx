@@ -11,6 +11,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { MOCK_PROVIDERS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, XCircleIcon } from '../../constants';
 import { downloadCSV, downloadExcel, downloadPDF } from '../../utils/exportUtils';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 
 interface MockLeadTimeData {
@@ -151,7 +152,7 @@ const InformeTiemposEsperaPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Informe de Tiempos de Ciclo/Espera</h1>
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)} />}
       
@@ -184,7 +185,7 @@ const InformeTiemposEsperaPage: React.FC = () => {
         </div>
         <Table columns={columns} data={filteredData} keyExtractor={item => item.id} emptyMessage="No hay datos para el análisis seleccionado o filtros aplicados." />
       </Card>
-    </div>
+    </MainContainer>
   );
 };
 

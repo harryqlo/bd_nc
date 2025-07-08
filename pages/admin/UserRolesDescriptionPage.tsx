@@ -4,6 +4,7 @@ import { Card } from '../../components/ui/Card';
 import { UserRole } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const UserRolesDescriptionPage: React.FC = () => {
   const { user } = useAuth();
@@ -71,7 +72,7 @@ const UserRolesDescriptionPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Descripción de Roles de Usuario</h1>
       <p className="text-gray-600 dark:text-slate-300">
         A continuación se detalla qué puede hacer cada tipo de usuario en el sistema.
@@ -95,7 +96,7 @@ const UserRolesDescriptionPage: React.FC = () => {
           </div>
         </Card>
       ))}
-    </div>
+    </MainContainer>
   );
 };
 

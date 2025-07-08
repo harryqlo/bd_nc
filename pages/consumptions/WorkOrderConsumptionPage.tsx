@@ -11,7 +11,8 @@ import ConsumptionForm from '../../components/consumptions/ConsumptionForm';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon, XCircleIcon, MOCK_USERS, logAuditEntry } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
-import { MOCK_CONSUMPTIONS, MOCK_WORK_ORDERS, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_SOLICITANTES } from '../../constants'; 
+import { MOCK_CONSUMPTIONS, MOCK_WORK_ORDERS, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_SOLICITANTES } from '../../constants';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const formatDate = (dateString: string) => {
   if (!dateString) return 'N/A';
@@ -272,7 +273,7 @@ const WorkOrderConsumptionPage: React.FC = () => {
 
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-3xl font-bold text-gray-800">Consumos por Orden de Trabajo (OT)</h1>
         {canRecord && (
@@ -388,7 +389,7 @@ const WorkOrderConsumptionPage: React.FC = () => {
         </div>
       </Modal>
 
-    </div>
+    </MainContainer>
   );
 };
 

@@ -10,6 +10,7 @@ import { PlusIcon, PencilIcon, TrashIcon, MOCK_USERS, logAuditEntry } from '../.
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
 import { Navigate } from 'react-router-dom';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const UserManagementPage: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -129,7 +130,7 @@ const UserManagementPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-800">Gestión de Usuarios</h1>
         <Button onClick={handleAddUser} leftIcon={<PlusIcon className="w-5 h-5" />}>
@@ -186,7 +187,7 @@ const UserManagementPage: React.FC = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </MainContainer>
   );
 };
 

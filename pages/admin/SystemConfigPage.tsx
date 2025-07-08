@@ -13,6 +13,7 @@ import { UserRole, SystemConfig } from '../../types';
 import { Navigate } from 'react-router-dom';
 import { logAuditEntry, MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_PROVIDERS, MOCK_CATEGORIES, MOCK_CONSUMPTIONS, MOCK_DOCUMENTS, MOCK_WORK_ORDERS, MOCK_MATERIAL_REQUESTS, MOCK_USERS, MOCK_AUDIT_LOGS, MOCK_ADJUSTMENTS } from '../../constants';
 import { downloadJSON, downloadCSV } from '../../utils/exportUtils';
+import { MainContainer } from '../../components/layout/MainContainer';
 
 const SystemConfigPage: React.FC = () => {
   const { user: currentUser } = useAuth();
@@ -120,7 +121,7 @@ const SystemConfigPage: React.FC = () => {
   const handleViewSystemInfo = () => setIsSystemInfoModalOpen(true);
 
   return (
-    <div className="space-y-6">
+    <MainContainer className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-slate-100">Configuración del Sistema</h1>
 
       {message && <Alert type={message.type} message={message.text} onClose={() => setMessage(null)} className="mb-4" />}
@@ -199,7 +200,7 @@ const SystemConfigPage: React.FC = () => {
             <Button onClick={() => setIsSystemInfoModalOpen(false)}>Cerrar</Button>
         </div>
       </Modal>
-    </div>
+    </MainContainer>
   );
 };
 
