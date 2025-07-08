@@ -2,6 +2,7 @@
 import React, { createContext, useState, ReactNode, useContext, useCallback } from 'react';
 import { SystemConfig } from '../types';
 import { MOCK_SYSTEM_CONFIG } from '../constants';
+import { logger } from '../utils/logger';
 
 interface ConfigContextType {
   config: SystemConfig;
@@ -17,12 +18,12 @@ export const ConfigProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const setConfig = useCallback((newConfig: Partial<SystemConfig>) => {
     setInternalConfig(prevConfig => ({ ...prevConfig, ...newConfig }));
     // Here you might also persist to localStorage or an API in a real app
-    console.log("System config updated:", { ...config, ...newConfig });
+    logger.log('System config updated:', { ...config, ...newConfig });
   }, [config]);
 
   const resetConfig = useCallback(() => {
     setInternalConfig(MOCK_SYSTEM_CONFIG);
-    console.log("System config reset to default.");
+    logger.log('System config reset to default.');
   }, []);
 
   return (
