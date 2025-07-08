@@ -167,7 +167,8 @@ codex/actualizar-readme-y-componentes-de-texto
     *   En otra terminal, usa `npm run dev` para iniciar el servidor de desarrollo de Vite.
 main
 3.  **Compilación para Producción**: Ejecuta `npm run build` para generar la carpeta `dist` con todos los archivos estáticos listos para desplegar. Este comando también compila los estilos de Tailwind a `dist/output.css`.
-4.  **Acceso**:
+4.  **Pruebas**: Ejecuta `npm test` para correr la suite de tests con Vitest.
+5.  **Acceso**:
     *   Una vez abierta la aplicación en el navegador, serás dirigido a la página de Login.
     *   Credenciales de ejemplo (usuario/contraseña):
         *   `admin` / `admin123`

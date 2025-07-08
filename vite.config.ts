@@ -18,6 +18,11 @@ export default defineConfig(({ mode }) => {
       build: {
         outDir: 'dist',
         emptyOutDir: true
+      },
+      test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: './setupTests.ts'
       }
     };
 });
