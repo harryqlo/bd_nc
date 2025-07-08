@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build && npm run build:css",
+    "build:css": "tailwindcss -i ./src/styles/global.css -o ./dist/output.css --minify"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -14,7 +15,12 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/forms": "^0.5.10",
     "@vitejs/plugin-react": "^4.6.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "vite": "^7.0.3"
   }

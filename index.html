@@ -4,40 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>North Chrome LTDA - Gestión de Bodega</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class', // Enable class-based dark mode
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                light: '#60a5fa', // blue-400
-                DEFAULT: '#3b82f6', // blue-500
-                dark: '#2563eb',  // blue-600
-              },
-              neutral: { // Light mode neutrals
-                light: '#f3f4f6', // gray-100
-                DEFAULT: '#d1d5db', // gray-300
-                dark: '#374151',   // gray-700
-              },
-              // Define dark mode specific colors if needed, or use dark: prefix in classes
-              // For example, if you want to override text color globally in dark mode
-            }
-          }
-        },
-        // Ensure variants for dark mode are available if not by default with CDN
-        variants: { 
-            extend: {
-                backgroundColor: ['dark'],
-                textColor: ['dark'],
-                borderColor: ['dark'],
-            },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/output.css" />
+    
   </head>
-  <body class="bg-neutral-light dark:bg-slate-900 text-gray-800 dark:text-slate-200">
+   <body class="font-sans bg-neutral-light dark:bg-slate-900 text-gray-800 dark:text-slate-200">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
