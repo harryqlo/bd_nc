@@ -30,8 +30,20 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user } = useAuth();
-  if (!user) {
+  const { user, token, logout } = useAuth();
+  const isTokenValid = (tok: string | null) => {
+    if (!tok) return false;
+    try {
+      const payload = JSON.parse(atob(tok.split('.')[1]));
+      return payload.exp * 1000 > Date.now();
+    } catch {
+      return false;
+    }
+  };
+  if (!user || !isTokenValid(token)) {
+    if (token && !isTokenValid(token)) {
+      logout();
+    }
     return <Navigate to="/login" replace />;
   }
   return <>{children}</>;

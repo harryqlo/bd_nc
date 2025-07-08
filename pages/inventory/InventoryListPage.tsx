@@ -9,12 +9,13 @@ import { Modal } from '../../components/ui/Modal';
 import ProductForm from '../../components/inventory/ProductForm';
 import StockAdjustmentModal from '../../components/inventory/StockAdjustmentModal';
 import KardexModal from '../../components/inventory/KardexModal'; 
-import { 
-    PlusIcon, PencilIcon, TrashIcon, CubeIcon, 
+import {
+    PlusIcon, PencilIcon, TrashIcon, CubeIcon,
     FilterIcon, XCircleIcon, ChevronUpIcon, ChevronDownIcon, SelectorIcon,
-    MOCK_PRODUCTS_FOR_CONSUMPTION, MOCK_CATEGORIES, MOCK_PROVIDERS, MOCK_ADJUSTMENTS, // Added MOCK_ADJUSTMENTS
+    MOCK_CATEGORIES, MOCK_PROVIDERS, MOCK_ADJUSTMENTS, // Added MOCK_ADJUSTMENTS
     ClipboardDocumentListIcon, logAuditEntry
 } from '../../constants';
+import { fetchProducts } from '../../utils/api';
 import { useAuth } from '../../hooks/useAuth';
 import { Alert } from '../../components/ui/Alert';
 import { Card } from '../../components/ui/Card';
@@ -37,7 +38,9 @@ const initialAdvancedFilters: AdvancedInventoryFilters = {
 
 const InventoryListPage: React.FC = () => {
   const { user } = useAuth();
-  const [products, setProducts] = useState<Product[]>([...MOCK_PRODUCTS_FOR_CONSUMPTION]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isAdjustmentModalOpen, setIsAdjustmentModalOpen] = useState(false);
@@ -64,9 +67,18 @@ const InventoryListPage: React.FC = () => {
 
 
   useEffect(() => {
-    // Sync local state if global MOCK_PRODUCTS_FOR_CONSUMPTION changes from other operations (e.g., document reception)
-    setProducts([...MOCK_PRODUCTS_FOR_CONSUMPTION]);
-  }, []); // Re-evaluate if this broad sync is needed or if more targeted updates are better
+    setLoading(true);
+    fetchProducts()
+      .then(data => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError('Error al cargar productos');
+        setLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     if (alertMessage) {
@@ -200,10 +212,6 @@ const InventoryListPage: React.FC = () => {
     const updatedProducts = products.filter(p => p.sku !== productToDelete.sku);
     setProducts(updatedProducts);
     
-    const MOCK_PRODUCTS_FOR_CONSUMPTION_Index = MOCK_PRODUCTS_FOR_CONSUMPTION.findIndex(p => p.sku === productToDelete.sku);
-    if (MOCK_PRODUCTS_FOR_CONSUMPTION_Index !== -1) {
-      MOCK_PRODUCTS_FOR_CONSUMPTION.splice(MOCK_PRODUCTS_FOR_CONSUMPTION_Index, 1);
-    }
     logAuditEntry(user.username, "PRODUCTO_ELIMINADO", `Producto SKU '${productToDelete.sku}' - '${productToDelete.nombre}' eliminado.`);
     setAlertMessage({ type: 'success', message: `Producto ${productToDelete.sku} eliminado correctamente.` });
     setIsConfirmDeleteModalOpen(false);
@@ -216,15 +224,12 @@ const InventoryListPage: React.FC = () => {
     if (status.success && user) {
       const existingProductIndex = products.findIndex(p => p.sku === productData.sku);
       let updatedProducts;
-      if (existingProductIndex !== -1) { 
+      if (existingProductIndex !== -1) {
         updatedProducts = products.map(p => p.sku === productData.sku ? productData : p);
-        const MOCK_PRODUCTS_FOR_CONSUMPTION_Index = MOCK_PRODUCTS_FOR_CONSUMPTION.findIndex(p => p.sku === productData.sku);
-        if(MOCK_PRODUCTS_FOR_CONSUMPTION_Index !== -1) MOCK_PRODUCTS_FOR_CONSUMPTION[MOCK_PRODUCTS_FOR_CONSUMPTION_Index] = productData;
         logAuditEntry(user.username, "PRODUCTO_ACTUALIZADO", `Producto SKU '${productData.sku}' - '${productData.nombre}' actualizado.`);
-      } else { 
+      } else {
         const newProductWithId = { ...productData, id: productData.sku, fecha_ultimo_ingreso: new Date().toISOString().split('T')[0] };
         updatedProducts = [newProductWithId, ...products];
-        MOCK_PRODUCTS_FOR_CONSUMPTION.unshift(newProductWithId);
         logAuditEntry(user.username, "PRODUCTO_CREADO", `Producto SKU '${newProductWithId.sku}' - '${newProductWithId.nombre}' creado.`);
       }
       setProducts(updatedProducts);
@@ -251,10 +256,6 @@ const InventoryListPage: React.FC = () => {
     const updatedProductsList = products.map(p => p.sku === sku ? updatedProduct : p);
     setProducts(updatedProductsList);
 
-    const MOCK_PRODUCTS_FOR_CONSUMPTION_Index = MOCK_PRODUCTS_FOR_CONSUMPTION.findIndex(p => p.sku === sku);
-    if (MOCK_PRODUCTS_FOR_CONSUMPTION_Index !== -1) {
-      MOCK_PRODUCTS_FOR_CONSUMPTION[MOCK_PRODUCTS_FOR_CONSUMPTION_Index] = updatedProduct;
-    }
     
     const newAdjustment: InventoryAdjustment = {
         id: `ADJ-${nextAdjustmentIdCounter.current++}`,
@@ -380,6 +381,8 @@ const InventoryListPage: React.FC = () => {
         </div>
       </div>
 
+      {loading && <p className="text-sm text-gray-600 dark:text-slate-400">Cargando productos...</p>}
+      {error && <Alert type="error" message={error} onClose={() => setError(null)} />}
       {alertMessage && <Alert type={alertMessage.type} message={alertMessage.message} onClose={() => setAlertMessage(null)} />}
 
       <Input

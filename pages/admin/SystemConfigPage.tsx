@@ -193,7 +193,7 @@ const SystemConfigPage: React.FC = () => {
         <div className="text-sm space-y-2">
             <p><strong>Versión de Aplicación:</strong> 1.0.2-beta (XLSX Enabled)</p>
             <p><strong>Hora del Cliente:</strong> {new Date().toLocaleString('es-CL')}</p>
-            <p><strong>Estado Base de Datos:</strong> Simulada (En memoria)</p>
+            <p><strong>Estado Base de Datos:</strong> Operativa (MongoDB)</p>
             <p><strong>Entorno:</strong> Desarrollo Frontend</p>
             <p><strong>Configuración Cargada:</strong> {config.companyName}</p>
         </div>

@@ -7,7 +7,10 @@ import { logger } from '../utils/logger';
 interface AuthContextType {
   user: User | null;
   token: string | null;
+ codex/implementar-renovacion-de-token
   login: (username: string, role: UserRole) => void;
+  login: (user: User, token: string) => void;
+main
   logout: () => void;
   renewToken: () => void;
   loading: boolean;
@@ -41,6 +44,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const storedUser = localStorage.getItem('authUser');
       const storedToken = localStorage.getItem('authToken');
       if (storedUser && storedToken) {
+codex/implementar-renovacion-de-token
         const parsedUser = JSON.parse(storedUser);
         const parsedToken = JSON.parse(storedToken);
         if (
@@ -55,6 +59,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           localStorage.removeItem('authUser');
           localStorage.removeItem('authToken');
         }
+
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+main
       }
     } catch (error) {
       logger.error('Failed to parse auth session from localStorage', error);
@@ -64,6 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLoading(false);
   }, []);
 
+ codex/implementar-renovacion-de-token
   const login = (username: string, role: UserRole) => {
     const userData: User = { id: Date.now().toString(), username, role };
     const newToken = Math.random().toString(36).substring(2);
@@ -73,11 +82,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('authUser', JSON.stringify(userData));
     localStorage.setItem('authToken', JSON.stringify({ token: newToken, expiresAt }));
     scheduleExpiry(expiresAt);
+  const login = (userData: User, authToken: string) => {
+    setUser(userData);
+    setToken(authToken);
+    localStorage.setItem('authUser', JSON.stringify(userData));
+    localStorage.setItem('authToken', authToken);
+ main
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
+ codex/implementar-renovacion-de-token
     if (expiryTimeoutRef.current) {
       window.clearTimeout(expiryTimeoutRef.current);
     }
@@ -91,6 +107,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('authToken', JSON.stringify({ token, expiresAt }));
     scheduleExpiry(expiresAt);
     logger.log('Session renewed');
+
+    localStorage.removeItem('authUser');
+    localStorage.removeItem('authToken');
+main
   };
 
   if (loading) {
@@ -98,7 +118,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   return (
+codex/implementar-renovacion-de-token
     <AuthContext.Provider value={{ user, token, login, logout, renewToken, loading }}>
+=======
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+ main
       {children}
     </AuthContext.Provider>
   );
